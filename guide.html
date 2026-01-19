@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide - FlowForge Automator</title>
+    <meta name="description" content="Hướng dẫn sử dụng chi tiết FlowForge Automator - Tool tự động hóa Veo3/Flow.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='10' fill='%23161616' stroke='%23262626' stroke-width='1'/><path d='M14 12H28V15L19 15V19H26V22H19V28H15V12Z' fill='%23f5a623'/><rect x='21' y='22' width='9' height='3' rx='1.5' fill='%2322d3ee'/></svg>">
+    <style>
+        :root {
+            /* Theme Colors - Shared with Landing Page */
+            --bg-dark: #0d0d0d;
+            --bg-card: #161616;
+            --primary: #f5a623;
+            --primary-glow: rgba(245, 166, 35, 0.4);
+            --secondary: #22d3ee;
+            --secondary-glow: rgba(34, 211, 238, 0.4);
+            --accent-red: #ff4d4d;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --border-color: #262626;
+            --border-subtle: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--primary);
+        }
+
+        /* --- Header --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: 60px;
+            background: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            padding: 0 1.5rem;
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-wrapper {
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-wrapper span {
+            color: var(--primary);
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .lang-switch {
+            display: flex;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 2px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        .lang-btn {
+            padding: 4px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: #000;
+            font-weight: 700;
+        }
+
+        /* --- Main Layout --- */
+        .guide-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 60px auto 0;
+            /* Top margin for fixed header */
+            min-height: calc(100vh - 60px);
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 60px;
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+            padding: 2rem 1rem;
+            border-right: 1px solid var(--border-color);
+            background: var(--bg-dark);
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-radius: 6px;
+            border-left: 2px solid transparent;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border-left-color: var(--primary);
+        }
+
+        .sidebar-heading {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--secondary);
+            margin: 1.5rem 0 0.5rem 1rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .sidebar-heading:first-child {
+            margin-top: 0;
+        }
+
+        /* --- Content --- */
+        .content-area {
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            max-width: 900px;
+            /* Readability limit */
+        }
+
+        /* Typography within content */
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #f5a623 0%, #ff6b35 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem;
+            color: var(--secondary);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+
+        ul,
+        ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: #ccc;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Code & Tables */
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--primary);
+        }
+
+        pre {
+            background: var(--bg-card);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        td {
+            color: #ccc;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            .content-area {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .guide-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: 0;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 1rem;
+            }
+
+            .sidebar-menu {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .sidebar-link {
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-left: 1px solid var(--border-color);
+                /* reset */
+            }
+
+            .sidebar-heading {
+                width: 100%;
+                margin: 1rem 0 0.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .content-area {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <a href="landing_page_v2.html" class="logo-wrapper">
+                <svg width="24" height="24" viewBox="0 0 40 40">
+                    <rect width="40" height="40" rx="10" fill="%23161616" stroke="%23262626" stroke-width="1" />
+                    <path d="M14 12H28V15L19 15V19H26V22H19V28H15V12Z" fill="%23f5a623" />
+                    <rect x="21" y="22" width="9" height="3" rx="1.5" fill="%2322d3ee" />
+                </svg>
+                FlowForge <span>Automator</span>
+            </a>
+            <div class="nav-controls">
+                <div class="lang-switch">
+                    <div class="lang-btn active" onclick="setLang('vi')">VI</div>
+                    <div class="lang-btn" onclick="setLang('en')">EN</div>
+                </div>
+                <a href="landing_page_v2.html"
+                    style="font-size: 0.9rem; color: var(--text-muted); margin-left:1rem;">Back to Home</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="guide-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <ul class="sidebar-menu" id="sidebar-vi">
+                <li class="sidebar-heading">Bắt đầu</li>
+                <li><a href="#cai-dat" class="sidebar-link">1. Cài đặt</a></li>
+                <li><a href="#license" class="sidebar-link">2. Các gói tài khoản</a></li>
+                <li class="sidebar-heading">Tính năng</li>
+                <li><a href="#video-tab" class="sidebar-link">3. Tab Video</a></li>
+                <li><a href="#image-tab" class="sidebar-link">4. Tab Image</a></li>
+                <li class="sidebar-heading">Khác</li>
+                <li><a href="#quota" class="sidebar-link">5. Quota & Lưu ý</a></li>
+            </ul>
+
+            <ul class="sidebar-menu" id="sidebar-en" style="display:none;">
+                <li class="sidebar-heading">Getting Started</li>
+                <li><a href="#installation" class="sidebar-link">1. Installation</a></li>
+                <li><a href="#license-en" class="sidebar-link">2. License Tiers</a></li>
+                <li class="sidebar-heading">Features</li>
+                <li><a href="#video-tab-en" class="sidebar-link">3. Video Tab</a></li>
+                <li><a href="#image-tab-en" class="sidebar-link">4. Image Tab</a></li>
+                <li class="sidebar-heading">Misc</li>
+                <li><a href="#quota-en" class="sidebar-link">5. Quota & Troubleshooting</a></li>
+            </ul>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="content-area">
+
+            <!-- ====== VIETNAMESE CONTENT ====== -->
+            <div id="content-vi">
+                <h1>Hướng Dẫn Sử Dụng FlowForge</h1>
+                <p>Chào mừng bạn đến với <strong>FlowForge Automator</strong> - Tool tự động hóa quy trình tạo Video và
+                    Image trên nền tảng Flow.</p>
+                <hr style="border:0; border-top:1px solid var(--border-color); margin: 2rem 0;">
+
+                <section id="cai-dat">
+                    <h2>🚀 1. CÀI ĐẶT (INSTALLATION)</h2>
+                    <p>Tool hoạt động dưới dạng <strong>Chrome Extension</strong>.</p>
+                    <ol>
+                        <li>Tải và giải nén file <code>.zip</code> của tool ra một thư mục (Ví dụ:
+                            <code>FlowForge_v3</code>).
+                        </li>
+                        <li>Mở trình duyệt <strong>Google Chrome</strong>.</li>
+                        <li>Truy cập vào trang quản lý Extension:
+                            <ul>
+                                <li>Nhập <code>chrome://extensions/</code> vào thanh địa chỉ và nhấn Enter.</li>
+                                <li>Hoặc vào Menu (3 chấm) > Extensions > <strong>Manage Extensions</strong>.</li>
+                            </ul>
+                        </li>
+                        <li>Bật chế độ <strong>Developer mode</strong> (Góc trên bên phải màn hình).</li>
+                        <li>Nhấn nút <strong>Load unpacked</strong> (Góc trên bên trái).</li>
+                        <li>Chọn thư mục bạn vừa giải nén (<code>FlowForge_v3</code> hoặc <code>dist_safe</code>).</li>
+                        <li>Biểu tượng <strong>FlowForge</strong> sẽ xuất hiện trên thanh công cụ của Chrome.</li>
+                    </ol>
+                </section>
+
+                <section id="license">
+                    <h2>🔑 2. CÁC GÓI TÀI KHOẢN (LICENSE TIERS)</h2>
+                    <p>Tool có 4 cấp độ tài khoản với các quyền lợi khác nhau:</p>
+
+                    <h3>1. Chế độ Free (Mặc định)</h3>
+                    <ul>
+                        <li>Mặc định khi cài đặt.</li>
+                        <li><strong>Giới hạn:</strong> 5 lần chạy (runs) mỗi ngày.</li>
+                        <li><strong>Prompt:</strong> Tối đa 5 prompt mỗi lần chạy.</li>
+                        <li><strong>Batch:</strong> Cho phép dùng Batch mode nhưng giới hạn Batch Size tối đa là 2.</li>
+                        <li><strong>Thiết bị:</strong> 1 thiết bị.</li>
+                    </ul>
+
+                    <h3>2. Gói Trial (Dùng thử)</h3>
+                    <ul>
+                        <li>Dành cho người dùng muốn trải nghiệm đầy đủ tính năng trong thời gian ngắn (ví dụ: 7 ngày).
+                        </li>
+                        <li><strong>Giới hạn:</strong> 20 lần chạy mỗi ngày.</li>
+                        <li><strong>Prompt:</strong> Tối đa 20 prompt mỗi lần chạy.</li>
+                        <li><strong>Batch:</strong> Batch Size theo cấu hình server (thường là 2-3).</li>
+                    </ul>
+
+                    <h3>3. Gói Standard (Vĩnh viễn)</h3>
+                    <ul>
+                        <li>Gói trả phí vĩnh viễn (Lifetime).</li>
+                        <li><strong>Giới hạn:</strong> 20 lần chạy mỗi ngày.</li>
+                        <li><strong>Prompt:</strong> Tối đa 20 prompt mỗi lần chạy.</li>
+                        <li><strong>Batch:</strong> Batch Size theo cấu hình server (thường là 2-3).</li>
+                    </ul>
+
+                    <h3>4. Gói Premium (Unlimited)</h3>
+                    <ul>
+                        <li>Gói cao cấp nhất với đầy đủ quyền năng.</li>
+                        <li><strong>Giới hạn:</strong> Không giới hạn lượt chạy (9999 runs).</li>
+                        <li><strong>Prompt:</strong> Không giới hạn số lượng prompt (999 prompts).</li>
+                        <li><strong>Batch:</strong> Batch Size tối đa là 5 (Tốc độ tối đa trên Flow).</li>
+                        <li><strong>Thiết bị:</strong> Hỗ trợ dùng trên 3 thiết bị cùng lúc.</li>
+                        <li><strong>Thứ tự tùy chỉnh:</strong> Cho phép dùng tính năng "Enable Custom Sequence".</li>
+                    </ul>
+
+                    <h3>Cách kích hoạt:</h3>
+                    <ol>
+                        <li>Bấm vào biểu tượng extension FlowForge để mở Sidepanel.</li>
+                        <li>Nhấn nút <strong>"Upgrade"</strong> hoặc biểu tượng chìa khóa 🔑.</li>
+                        <li>Nhập <strong>License Key</strong> bạn đã mua.</li>
+                        <li>Nhấn nút kích hoạt.</li>
+                        <li>Nếu thành công, Badge màu tương ứng (TRIAL, STANDARD, PREMIUM) sẽ xuất hiện.</li>
+                    </ol>
+                </section>
+
+                <section id="video-tab">
+                    <h2>🎬 3. TÍNH NĂNG: TAB VIDEO</h2>
+                    <p>Dùng để tạo video từ văn bản (Prompt).</p>
+
+                    <h3>A. Giao diện chính:</h3>
+                    <ul>
+                        <li><strong>Prompt Input:</strong> Nhập list Prompt mô tả Video. Hỗ trợ nhiều dòng (Mỗi dòng là
+                            1 Prompt khác nhau).</li>
+                    </ul>
+
+                    <h3>B. Chế độ chạy:</h3>
+                    <ol>
+                        <li><strong>Sequential Mode (Mặc định):</strong>
+                            <ul>
+                                <li>Chạy lần lượt từng dòng prompt từ trên xuống dưới.</li>
+                                <li><strong>Quota:</strong> Trừ <strong>1 credit</strong> mỗi lần chạy.</li>
+                                <li>Phù hợp khi bạn muốn kiểm soát từng video.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Batch Mode (Chế độ Hàng loạt) 🚀:</strong>
+                            <ul>
+                                <li>Bật nút gạt <strong>"Chế độ Batch Mode"</strong>.</li>
+                                <li>Create tối đa <strong>5 queue</strong> cùng lúc.</li>
+                                <li>Tool sẽ create từng prompt cho đến khi đủ số batch size trong một thời điểm.</li>
+                                <li><strong>Quota:</strong> Trừ <strong>2 credits</strong> mỗi lần chạy (cho cả lô nhiều
+                                    prompts).</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <h3>C. Cách chọn ảnh:</h3>
+                    <ul>
+                        <li><strong>Chọn ảnh:</strong> Nhấn nút để chọn file ảnh từ máy tính (Có thể chọn nhiều ảnh).
+                        </li>
+                        <li><strong>Xóa ảnh:</strong> Click vào ảnh để xóa.</li>
+                    </ul>
+
+                    <h3>D. Các chế độ ghép thêm ảnh (Pairing Mode):</h3>
+                    <ol>
+                        <li><strong>None (Text-to-Video only):</strong> Không dùng ảnh, chỉ dùng prompt text.</li>
+                        <li><strong>1-to-1 (Frames-to-Video):</strong> Mỗi prompt đi kèm 1 ảnh (Làm Start Frame).</li>
+                        <li><strong>Static (Frames-to-Video):</strong> Dùng 1-2 ảnh (Start/End Frame) áp dụng cho tất cả
+                            các prompt.</li>
+                        <li><strong>Start-End (Frames-to-Video):</strong> Dùng cặp 2 ảnh (Start & End) theo thứ tự cho
+                            mỗi prompt.</li>
+                        <li><strong>Ingredient 1-to-1:</strong> Upload tối đa 3 ảnh/prompt để tham chiếu.</li>
+                        <li><strong>Ingredient Static:</strong> Upload tối đa 3 ảnh dùng chung cho tất cả prompt.</li>
+                    </ol>
+                </section>
+
+                <section id="image-tab">
+                    <h2>🎨 4. TÍNH NĂNG: TAB CREATE IMAGE</h2>
+                    <p>Dùng để tạo ảnh từ văn bản. Chức năng này tự động chuyển giao diện Flow sang "Create Image".</p>
+
+                    <h3>A. Giao diện chính:</h3>
+                    <ul>
+                        <li><strong>Prompt:</strong> Nhập Prompts mô tả ảnh.</li>
+                        <li><strong>Batch Mode:</strong> Tạo đồng thời nhiều prompts cùng lúc.</li>
+                        <li><strong>Upscale:</strong> Tự động hỗ trợ Upscale lên 2K/4K.</li>
+                    </ul>
+
+                    <h3>B. Chế độ Image-to-Image (Tạo ảnh từ ảnh tham chiếu) 📸:</h3>
+                    <ul>
+                        <li><strong>Chọn ảnh:</strong> Upload tối đa 10 ảnh tham chiếu.</li>
+                        <li><strong>Các chế độ ghép ảnh:</strong>
+                            <ol>
+                                <li><strong>None:</strong> Không dùng ảnh.</li>
+                                <li><strong>1-to-1:</strong> Mỗi prompt đi kèm với một số lượng ảnh nhất định.</li>
+                                <li><strong>Static:</strong> Dùng toàn bộ số ảnh đã upload làm tham chiếu cho
+                                    <strong>tất cả</strong> prompt.
+                                </li>
+                            </ol>
+                        </li>
+                    </ul>
+
+                    <h3>C. Quota Image:</h3>
+                    <ul>
+                        <li><strong>Sequential:</strong> Trừ <strong>1 credit</strong> mỗi lần bấm "Run".</li>
+                        <li><strong>Batch:</strong> Trừ <strong>1 credit</strong> mỗi lần bấm "Run".</li>
+                    </ul>
+                </section>
+
+                <section id="quota">
+                    <h2>⚠️ 5. HỆ THỐNG QUOTA & LƯU Ý</h2>
+
+                    <h3>Cách tính Credit (Quota):</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Chức năng</th>
+                                <th>Chế độ (Mode)</th>
+                                <th>Chi phí (Cost)</th>
+                                <th>Ghi chú</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Video</strong></td>
+                                <td>Sequential</td>
+                                <td><strong>-1 credit</strong></td>
+                                <td>Chạy từng cái một.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Video</strong></td>
+                                <td><strong>Batch</strong></td>
+                                <td><strong>-2 credits</strong></td>
+                                <td>Chạy nhiều prompts cùng lúc (<strong>Khuyên dùng</strong>).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Image</strong></td>
+                                <td>Sequential</td>
+                                <td><strong>-1 credit</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Image</strong></td>
+                                <td><strong>Batch</strong></td>
+                                <td><strong>-1 credit</strong></td>
+                                <td>Chạy nhiều prompts cùng lúc.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Lỗi thường gặp:</h3>
+                    <ul>
+                        <li><strong>Mode Mismatch:</strong> Sai chế độ giữa Tool và Web Flow. -> <em>Khắc phục: Chuyển
+                                chế độ web cho khớp.</em></li>
+                        <li><strong>Limit Exceeded:</strong> Vượt quá giới hạn gói (ví dụ Free chạy quá 5 prompt). ->
+                            <em>Khắc phục: Giảm prompt hoặc nâng cấp.</em>
+                        </li>
+                        <li><strong>Quota Exhausted:</strong> Hết lượt trong ngày. -> <em>Khắc phục: Chờ 24h hoặc nâng
+                                cấp.</em></li>
+                    </ul>
+
+                    <h3>📞 Hỗ trợ:</h3>
+                    <p>Nếu gặp lỗi, vui lòng liên hệ Admin để được hỗ trợ. Chúc bạn sáng tạo vui vẻ với FlowForge!</p>
+                </section>
+            </div>
+
+            <!-- ====== ENGLISH CONTENT ====== -->
+            <div id="content-en" style="display:none;">
+                <h1>FlowForge Automator User Guide</h1>
+                <p>Welcome to <strong>FlowForge Automator</strong> - The ultimate tool for automating Video and Image
+                    creation on the Flow platform.</p>
+                <hr style="border:0; border-top:1px solid var(--border-color); margin: 2rem 0;">
+
+                <section id="installation">
+                    <h2>🚀 1. INSTALLATION</h2>
+                    <p>The tool operates as a <strong>Chrome Extension</strong>.</p>
+                    <ol>
+                        <li>Download and extract the tool's <code>.zip</code> file into a folder (e.g.,
+                            <code>FlowForge_v3</code>).
+                        </li>
+                        <li>Open your <strong>Google Chrome</strong> browser.</li>
+                        <li>Go to the Extension management page:
+                            <ul>
+                                <li>Enter <code>chrome://extensions/</code> in the address bar and press Enter.</li>
+                                <li>Or go to Menu (3 dots) > Extensions > <strong>Manage Extensions</strong>.</li>
+                            </ul>
+                        </li>
+                        <li>Enable <strong>Developer mode</strong> (Top right corner).</li>
+                        <li>Click the <strong>Load unpacked</strong> button (Top left corner).</li>
+                        <li>Select the folder you just extracted (<code>FlowForge_v3</code> or <code>dist_safe</code>).
+                        </li>
+                        <li>The <strong>FlowForge</strong> icon will appear in your Chrome toolbar.</li>
+                    </ol>
+                </section>
+
+                <section id="license-en">
+                    <h2>🔑 2. LICENSE TIERS</h2>
+                    <p>The tool offers 4 account levels with different benefits:</p>
+
+                    <h3>1. Free Mode (Default)</h3>
+                    <ul>
+                        <li>Default upon installation.</li>
+                        <li><strong>Daily Quota:</strong> 5 runs per day.</li>
+                        <li><strong>Max Prompts:</strong> Up to 5 prompts per run.</li>
+                        <li><strong>Batch Mode:</strong> Allowed, but Batch Size is limited to 2.</li>
+                        <li><strong>Devices:</strong> 1 device.</li>
+                    </ul>
+
+                    <h3>2. Trial Tier (Time-Limited)</h3>
+                    <ul>
+                        <li>For users wanting to experience full features for a short period (e.g., 7 days).</li>
+                        <li><strong>Daily Quota:</strong> 20 runs per day.</li>
+                        <li><strong>Max Prompts:</strong> Up to 20 prompts per run.</li>
+                        <li><strong>Batch Mode:</strong> Batch Size based on server config (usually 2-3).</li>
+                    </ul>
+
+                    <h3>3. Standard Tier (Lifetime)</h3>
+                    <ul>
+                        <li>A lifetime paid plan.</li>
+                        <li><strong>Daily Quota:</strong> 20 runs per day.</li>
+                        <li><strong>Max Prompts:</strong> Up to 20 prompts per run.</li>
+                        <li><strong>Batch Mode:</strong> Batch Size based on server config (usually 2-3).</li>
+                    </ul>
+
+                    <h3>4. Premium Tier (Unlimited)</h3>
+                    <ul>
+                        <li>The highest tier with full power.</li>
+                        <li><strong>Daily Quota:</strong> Unlimited (9999 runs).</li>
+                        <li><strong>Max Prompts:</strong> Unlimited prompts (up to 999).</li>
+                        <li><strong>Batch Mode:</strong> Max Batch Size of 5 (Highest speed on Flow).</li>
+                        <li><strong>Devices:</strong> Supports up to 3 devices simultaneously.</li>
+                        <li><strong>Custom Sequence:</strong> Enables the "Enable Custom Sequence" feature.</li>
+                    </ul>
+
+                    <h3>How to Activate:</h3>
+                    <ol>
+                        <li>Click the FlowForge extension icon to open the Sidepanel.</li>
+                        <li>Click the <strong>"Upgrade"</strong> button or the key icon 🔑.</li>
+                        <li>Enter the <strong>License Key</strong> you purchased.</li>
+                        <li>Click the activation button.</li>
+                        <li>If successful, the corresponding badge (TRIAL, STANDARD, PREMIUM) will appear.</li>
+                    </ol>
+                </section>
+
+                <section id="video-tab-en">
+                    <h2>🎬 3. FEATURE: VIDEO TAB</h2>
+                    <p>Used to create videos from text/image descriptions.</p>
+
+                    <h3>A. Main Interface:</h3>
+                    <ul>
+                        <li><strong>Prompt List:</strong> Enter a list of prompts describing your video. Each line is a
+                            separate prompt.</li>
+                    </ul>
+
+                    <h3>B. Operation Modes:</h3>
+                    <ol>
+                        <li><strong>Sequential Mode (Default):</strong>
+                            <ul>
+                                <li>Processes each prompt line by line from top to bottom.</li>
+                                <li><strong>Quota:</strong> Deducts <strong>1 credit</strong> per execution.</li>
+                                <li>Best for controlling each individual video generation.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Batch Mode (High Speed) 🚀:</strong>
+                            <ul>
+                                <li>Turn on the <strong>"Batch Mode"</strong> toggle.</li>
+                                <li>Creates up to <strong>5 slots</strong> simultaneously.</li>
+                                <li>The tool fills slots as they finish to ensure no idle time.</li>
+                                <li><strong>Quota:</strong> Deducts <strong>2 credits</strong> per batch run (for the
+                                    entire list of prompts).</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <h3>C. Image Selection:</h3>
+                    <ul>
+                        <li><strong>Choose Images:</strong> Click to select image files from your computer (Multiple
+                            selection supported).</li>
+                        <li><strong>Remove Images:</strong> Click on an image thumbnail to remove it.</li>
+                    </ul>
+
+                    <h3>D. Image Pairing Modes:</h3>
+                    <ol>
+                        <li><strong>None (Text-to-Video only):</strong> No images used.</li>
+                        <li><strong>1-to-1 (Frames-to-Video):</strong> Each prompt uses 1 image as the Start Frame.</li>
+                        <li><strong>Static (Frames-to-Video):</strong> Uses 1-2 fixed images for all prompts.</li>
+                        <li><strong>Start-End (Frames-to-Video):</strong> Uses pairs of 2 images (Start & End) for each
+                            prompt.</li>
+                        <li><strong>Ingredient 1-to-1:</strong> Upload up to 3 reference images for each prompt.</li>
+                        <li><strong>Ingredient Static:</strong> Upload up to 3 reference images to be used for all
+                            prompts.</li>
+                    </ol>
+                </section>
+
+                <section id="image-tab-en">
+                    <h2>🎨 4. FEATURE: CREATE IMAGE TAB</h2>
+                    <h3>A. Main Interface:</h3>
+                    <p>Used to create images from text. Automatically switches Flow interface to "Create Image" mode.
+                    </p>
+                    <ul>
+                        <li><strong>Prompts:</strong> Enter descriptions for your images.</li>
+                        <li><strong>Batch Mode:</strong> Processes multiple prompts simultaneously.</li>
+                        <li><strong>Upscale:</strong> Automatically supports upscaling to 2K/4K.</li>
+                    </ul>
+
+                    <h3>B. Image-to-Image Mode:</h3>
+                    <ul>
+                        <li><strong>Select Images:</strong> Click to upload up to 10 reference images.</li>
+                        <li><strong>Pairing Modes:</strong>
+                            <ol>
+                                <li><strong>None:</strong> No images used.</li>
+                                <li><strong>1-to-1:</strong> Each prompt uses a specific number of images.</li>
+                                <li><strong>Static:</strong> Uses all uploaded images as references for
+                                    <strong>every</strong> prompt.
+                                </li>
+                            </ol>
+                        </li>
+                    </ul>
+
+                    <h3>C. Quota Image:</h3>
+                    <ul>
+                        <li><strong>Sequential:</strong> Deducts <strong>1 credit</strong> per run.</li>
+                        <li><strong>Batch:</strong> Deducts <strong>1 credit</strong> per run.</li>
+                    </ul>
+                </section>
+
+                <section id="quota-en">
+                    <h2>⚠️ 5. QUOTA SYSTEM & TROUBLESHOOTING</h2>
+
+                    <h3>Quota Calculation:</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature (Tab)</th>
+                                <th>Mode</th>
+                                <th>Cost</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Video</strong></td>
+                                <td>Sequential</td>
+                                <td><strong>-1 credit</strong></td>
+                                <td>Processed one by one.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Video</strong></td>
+                                <td><strong>Batch</strong></td>
+                                <td><strong>-2 credits</strong></td>
+                                <td>Processed in parallel (<strong>Recommended</strong>).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Image</strong></td>
+                                <td>Sequential</td>
+                                <td><strong>-1 credit</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Image</strong></td>
+                                <td><strong>Batch</strong></td>
+                                <td><strong>-1 credit</strong></td>
+                                <td>Processed in parallel (<strong>Recommended</strong>).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Common Issues:</h3>
+                    <ul>
+                        <li><strong>Mode Mismatch:</strong> Tool tab doesn't match Flow website mode. -> <em>Fix: Switch
+                                web mode.</em></li>
+                        <li><strong>Limit Exceeded:</strong> Prompt count or Batch size exceeds tier limit. -> <em>Fix:
+                                Upgrade to Standard/Premium.</em></li>
+                        <li><strong>Daily Quota Exhausted:</strong> Runs used up. -> <em>Fix: Wait 24h or upgrade.</em>
+                        </li>
+                    </ul>
+
+                    <h3>📞 Support:</h3>
+                    <p>If you encounter any bugs, please contact the Admin via Telegram or Discord. Happy creating with
+                        FlowForge!</p>
+                </section>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Language Toggle Logic
+        function setLang(lang) {
+            const viContent = document.getElementById('content-vi');
+            const enContent = document.getElementById('content-en');
+            const viSidebar = document.getElementById('sidebar-vi');
+            const enSidebar = document.getElementById('sidebar-en');
+
+            const btns = document.querySelectorAll('.lang-btn');
+
+            if (lang === 'vi') {
+                viContent.style.display = 'block';
+                enContent.style.display = 'none';
+                viSidebar.style.display = 'block';
+                enSidebar.style.display = 'none';
+
+                btns[0].classList.add('active'); // VI button
+                btns[1].classList.remove('active'); // EN button
+
+                document.documentElement.lang = 'vi';
+                localStorage.setItem('flowforge_guide_lang', 'vi');
+            } else {
+                viContent.style.display = 'none';
+                enContent.style.display = 'block';
+                viSidebar.style.display = 'none';
+                enSidebar.style.display = 'block';
+
+                btns[0].classList.remove('active');
+                btns[1].classList.add('active');
+
+                document.documentElement.lang = 'en';
+                localStorage.setItem('flowforge_guide_lang', 'en');
+            }
+        }
+
+        // Initialize from LocalStorage or Default
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('flowforge_guide_lang') || 'vi';
+            setLang(savedLang);
+        });
+    </script>
+</body>
+
+</html>
