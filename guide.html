@@ -277,6 +277,23 @@
             color: #ccc;
         }
 
+        /* Images */
+        .screenshot-box {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            background: #000;
+        }
+
+        .img-responsive {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-width: 800px;
+            /* Optional cap */
+        }
+
         /* Mobile Responsive */
         @media (max-width: 900px) {
             .content-area {
@@ -387,9 +404,16 @@
                     Image trên nền tảng Flow.</p>
                 <hr style="border:0; border-top:1px solid var(--border-color); margin: 2rem 0;">
 
+                <!-- 📸 VỊ TRÍ GỢI Ý CHÈN ẢNH (BẠN CÓ THỂ COPY CODE ẢNH VÀO ĐÂY) -->
+
                 <section id="cai-dat">
                     <h2>🚀 1. CÀI ĐẶT (INSTALLATION)</h2>
                     <p>Tool hoạt động dưới dạng <strong>Chrome Extension</strong>.</p>
+
+                    <!-- 📸 DÁN CODE ẢNH VÀO ĐÂY NẾU MUỐN -->
+
+                    <!-- 📸 VỊ TRÍ CHÈN ẢNH HƯỚNG DẪN CÀI ĐẶT -->
+
                     <ol>
                         <li>Tải và giải nén file <code>.zip</code> của tool ra một thư mục (Ví dụ:
                             <code>FlowForge_v3</code>).
@@ -463,6 +487,10 @@
                     <p>Dùng để tạo video từ văn bản (Prompt).</p>
 
                     <h3>A. Giao diện chính:</h3>
+                    <div class="screenshot-box">
+                        <img src="assets/images/video_tab_vi.png" alt="Giao diện Video Tab" class="img-responsive"
+                            onerror="this.style.display='none'">
+                    </div>
                     <ul>
                         <li><strong>Prompt Input:</strong> Nhập list Prompt mô tả Video. Hỗ trợ nhiều dòng (Mỗi dòng là
                             1 Prompt khác nhau).</li>
@@ -513,6 +541,10 @@
                     <p>Dùng để tạo ảnh từ văn bản. Chức năng này tự động chuyển giao diện Flow sang "Create Image".</p>
 
                     <h3>A. Giao diện chính:</h3>
+                    <div class="screenshot-box">
+                        <img src="assets/images/image_tab_vi.png" alt="Giao diện Image Tab" class="img-responsive"
+                            onerror="this.style.display='none'">
+                    </div>
                     <ul>
                         <li><strong>Prompt:</strong> Nhập Prompts mô tả ảnh.</li>
                         <li><strong>Batch Mode:</strong> Tạo đồng thời nhiều prompts cùng lúc.</li>
@@ -604,9 +636,16 @@
                     creation on the Flow platform.</p>
                 <hr style="border:0; border-top:1px solid var(--border-color); margin: 2rem 0;">
 
+                <!-- 📸 SUGGESTED IMAGE SPOT (PASTE YOUR IMAGE CODE HERE) -->
+
                 <section id="installation">
                     <h2>🚀 1. INSTALLATION</h2>
                     <p>The tool operates as a <strong>Chrome Extension</strong>.</p>
+
+                    <!-- 📸 PASTE IMAGE CODE HERE IF NEEDED -->
+
+                    <!-- 📸 INSTALLATION SCREENSHOT HERE -->
+
                     <ol>
                         <li>Download and extract the tool's <code>.zip</code> file into a folder (e.g.,
                             <code>FlowForge_v3</code>).
@@ -680,6 +719,10 @@
                     <p>Used to create videos from text/image descriptions.</p>
 
                     <h3>A. Main Interface:</h3>
+                    <div class="screenshot-box">
+                        <img src="assets/images/video_tab_en.png" alt="Video Tab Interface" class="img-responsive"
+                            onerror="this.style.display='none'">
+                    </div>
                     <ul>
                         <li><strong>Prompt List:</strong> Enter a list of prompts describing your video. Each line is a
                             separate prompt.</li>
@@ -730,6 +773,10 @@
                     <h3>A. Main Interface:</h3>
                     <p>Used to create images from text. Automatically switches Flow interface to "Create Image" mode.
                     </p>
+                    <div class="screenshot-box">
+                        <img src="assets/images/image_tab_en.png" alt="Image Tab Interface" class="img-responsive"
+                            onerror="this.style.display='none'">
+                    </div>
                     <ul>
                         <li><strong>Prompts:</strong> Enter descriptions for your images.</li>
                         <li><strong>Batch Mode:</strong> Processes multiple prompts simultaneously.</li>
