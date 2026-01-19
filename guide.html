@@ -210,6 +210,18 @@
             color: var(--secondary);
         }
 
+        .highlight-text {
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.8rem;
+            color: #fff;
+            font-weight: 600;
+        }
+
         p {
             margin-bottom: 1rem;
             color: #ccc;
@@ -373,13 +385,12 @@
         <aside class="sidebar">
             <ul class="sidebar-menu" id="sidebar-vi">
                 <li class="sidebar-heading">Bắt đầu</li>
-                <li><a href="#cai-dat" class="sidebar-link">1. Cài đặt</a></li>
-                <li><a href="#license" class="sidebar-link">2. Các gói tài khoản</a></li>
-                <li class="sidebar-heading">Tính năng</li>
-                <li><a href="#video-tab" class="sidebar-link">3. Tab Video</a></li>
-                <li><a href="#image-tab" class="sidebar-link">4. Tab Image</a></li>
+                <li><a href="#cai-dat" class="sidebar-link">I. Cài đặt</a></li>
+                <li><a href="#license" class="sidebar-link">II. Kích hoạt License</a></li>
+                <li class="sidebar-heading">Sử dụng</li>
+                <li><a href="#huong-dan" class="sidebar-link">III. Hướng dẫn sử dụng</a></li>
                 <li class="sidebar-heading">Khác</li>
-                <li><a href="#quota" class="sidebar-link">5. Quota & Lưu ý</a></li>
+                <li><a href="#quota" class="sidebar-link">IV. Quota & Lưu ý</a></li>
             </ul>
 
             <ul class="sidebar-menu" id="sidebar-en" style="display:none;">
@@ -399,183 +410,172 @@
 
             <!-- ====== VIETNAMESE CONTENT ====== -->
             <div id="content-vi">
-                <h1>Hướng Dẫn Sử Dụng FlowForge</h1>
-                <p>Chào mừng bạn đến với <strong>FlowForge Automator</strong> - Tool tự động hóa quy trình tạo Video và
-                    Image trên nền tảng Flow.</p>
+                <h1>Hướng Dẫn Sử Dụng Extension Auto Flow Veo 3 / Nano Banana Pro</h1>
+                <p><strong>FlowForge Automator</strong> - Công cụ tự động hóa mạnh mẽ dành cho Creator trên nền tảng
+                    Flow Veo3.</p>
                 <hr style="border:0; border-top:1px solid var(--border-color); margin: 2rem 0;">
 
-                <!-- 📸 VỊ TRÍ GỢI Ý CHÈN ẢNH (BẠN CÓ THỂ COPY CODE ẢNH VÀO ĐÂY) -->
-
                 <section id="cai-dat">
-                    <h2>🚀 1. CÀI ĐẶT (INSTALLATION)</h2>
+                    <h2>🚀 I. CÀI ĐẶT (INSTALLATION)</h2>
                     <p>Tool hoạt động dưới dạng <strong>Chrome Extension</strong>.</p>
 
-                    <!-- 📸 DÁN CODE ẢNH VÀO ĐÂY NẾU MUỐN -->
+                    <h3>B1: Tải miễn phí extension</h3>
+                    <p>Truy cập và tải tại link: <a href="https://aiwithmt.gumroad.com/l/flowforge-free" target="_blank"
+                            style="color: var(--secondary);">VEO3 & NanoBanana Automation Extension (Free License) +
+                            Bonus 7 Days Trial</a></p>
+                    <ul>
+                        <li>Nhập <code>0</code> vào ô price => Click <strong>"I want this!"</strong></li>
+                        <li>View Content => Click <strong>Download Extension</strong> và Copy <strong>License
+                                Key</strong>.</li>
+                    </ul>
+
+                    <h3>B2: Cài đặt tool</h3>
+                    <p>Trong trang tải tool đã có hướng dẫn chi tiết cách cài extension vào Browser. Hiện tại đang hỗ
+                        trợ các Browser nhân Chrome (Cốc Cốc, Chrome, Edge,...).</p>
 
                     <!-- 📸 VỊ TRÍ CHÈN ẢNH HƯỚNG DẪN CÀI ĐẶT -->
+                    <!-- Code ảnh gợi ý:
+                    <div class="screenshot-box">
+                         <img src="assets/images/install_guide.png" class="img-responsive">
+                    </div> 
+                    -->
 
+                    <h4>📥 Hướng dẫn cài đặt nhanh (30 giây):</h4>
                     <ol>
-                        <li>Tải và giải nén file <code>.zip</code> của tool ra một thư mục (Ví dụ:
-                            <code>FlowForge_v3</code>).
-                        </li>
-                        <li>Mở trình duyệt <strong>Google Chrome</strong>.</li>
-                        <li>Truy cập vào trang quản lý Extension:
-                            <ul>
-                                <li>Nhập <code>chrome://extensions/</code> vào thanh địa chỉ và nhấn Enter.</li>
-                                <li>Hoặc vào Menu (3 chấm) > Extensions > <strong>Manage Extensions</strong>.</li>
-                            </ul>
-                        </li>
-                        <li>Bật chế độ <strong>Developer mode</strong> (Góc trên bên phải màn hình).</li>
-                        <li>Nhấn nút <strong>Load unpacked</strong> (Góc trên bên trái).</li>
-                        <li>Chọn thư mục bạn vừa giải nén (<code>FlowForge_v3</code> hoặc <code>dist_safe</code>).</li>
-                        <li>Biểu tượng <strong>FlowForge</strong> sẽ xuất hiện trên thanh công cụ của Chrome.</li>
+                        <li>Tải file <code>.zip</code> và giải nén.</li>
+                        <li>Mở Chrome, truy cập <code>chrome://extensions</code>.</li>
+                        <li>⚠️ Bật <strong>“Chế độ dành cho nhà phát triển” (Developer mode)</strong> ở góc trên bên
+                            phải.</li>
+                        <li>Nhấn <strong>“Load unpacked”</strong> (Tải tiện ích chưa đóng gói) và chọn thư mục đã giải
+                            nén.</li>
                     </ol>
                 </section>
 
                 <section id="license">
-                    <h2>🔑 2. CÁC GÓI TÀI KHOẢN (LICENSE TIERS)</h2>
-                    <p>Tool có 4 cấp độ tài khoản với các quyền lợi khác nhau:</p>
+                    <h2>🔑 II. KÍCH HOẠT LICENSE (ACTIVATION)</h2>
+                    <p>Tool có 2 chế độ: <strong>Free (Miễn phí)</strong> và <strong>Paid (Trả phí)</strong>.</p>
 
-                    <h3>1. Chế độ Free (Mặc định)</h3>
+                    <h3>1. License Free</h3>
                     <ul>
                         <li>Mặc định khi cài đặt.</li>
                         <li><strong>Giới hạn:</strong> 5 lần chạy (runs) mỗi ngày.</li>
-                        <li><strong>Prompt:</strong> Tối đa 5 prompt mỗi lần chạy.</li>
-                        <li><strong>Batch:</strong> Cho phép dùng Batch mode nhưng giới hạn Batch Size tối đa là 2.</li>
-                        <li><strong>Thiết bị:</strong> 1 thiết bị.</li>
+                        <li><strong>Chức năng:</strong> Sử dụng được đầy đủ tính năng nhưng bị giới hạn số lượng.</li>
                     </ul>
 
-                    <h3>2. Gói Trial (Dùng thử)</h3>
+                    <h3>2. License Paid (Trial/Standard/Lifetime)</h3>
                     <ul>
-                        <li>Dành cho người dùng muốn trải nghiệm đầy đủ tính năng trong thời gian ngắn (ví dụ: 7 ngày).
-                        </li>
-                        <li><strong>Giới hạn:</strong> 20 lần chạy mỗi ngày.</li>
-                        <li><strong>Prompt:</strong> Tối đa 20 prompt mỗi lần chạy.</li>
-                        <li><strong>Batch:</strong> Batch Size theo cấu hình server (thường là 2-3).</li>
-                    </ul>
-
-                    <h3>3. Gói Standard (Vĩnh viễn)</h3>
-                    <ul>
-                        <li>Gói trả phí vĩnh viễn (Lifetime).</li>
-                        <li><strong>Giới hạn:</strong> 20 lần chạy mỗi ngày.</li>
-                        <li><strong>Prompt:</strong> Tối đa 20 prompt mỗi lần chạy.</li>
-                        <li><strong>Batch:</strong> Batch Size theo cấu hình server (thường là 2-3).</li>
-                    </ul>
-
-                    <h3>4. Gói Premium (Unlimited)</h3>
-                    <ul>
-                        <li>Gói cao cấp nhất với đầy đủ quyền năng.</li>
-                        <li><strong>Giới hạn:</strong> Không giới hạn lượt chạy (9999 runs).</li>
-                        <li><strong>Prompt:</strong> Không giới hạn số lượng prompt (999 prompts).</li>
-                        <li><strong>Batch:</strong> Batch Size tối đa là 5 (Tốc độ tối đa trên Flow).</li>
-                        <li><strong>Thiết bị:</strong> Hỗ trợ dùng trên 3 thiết bị cùng lúc.</li>
-                        <li><strong>Thứ tự tùy chỉnh:</strong> Cho phép dùng tính năng "Enable Custom Sequence".</li>
-                    </ul>
-
-                    <h3>Cách kích hoạt:</h3>
-                    <ol>
                         <li>Bấm vào biểu tượng extension FlowForge để mở Sidepanel.</li>
-                        <li>Nhấn nút <strong>"Upgrade"</strong> hoặc biểu tượng chìa khóa 🔑.</li>
+                        <li>Nhấn nút <strong>"Upgrade" (Nâng cấp)</strong> hoặc biểu tượng chìa khóa 🔑.</li>
                         <li>Nhập <strong>License Key</strong> bạn đã mua.</li>
-                        <li>Nhấn nút kích hoạt.</li>
-                        <li>Nếu thành công, Badge màu tương ứng (TRIAL, STANDARD, PREMIUM) sẽ xuất hiện.</li>
-                    </ol>
+                        <li>Nhấn <strong>"Verify"</strong>.</li>
+                        <li>Nếu thành công, giao diện sẽ chuyển sang trạng thái <strong>PRO</strong> (Không giới hạn
+                            hoặc theo gói đã mua).</li>
+                    </ul>
+
+                    <p>Bạn có thể mua License ở đây:</p>
+                    <ul>
+                        <li><a href="https://aiwithmt.gumroad.com/l/flowforge-trial" target="_blank"
+                                style="color: var(--primary);">Gói Standard</a></li>
+                        <li><a href="https://aiwithmt.gumroad.com/l/flowforge-lifetime" target="_blank"
+                                style="color: #a855f7;">Gói Lifetime</a></li>
+                    </ul>
+
+                    <!-- 📸 ẢNH MINH HỌA LICENSE -->
+                    <h4>🔐 Hướng dẫn nhập License Key</h4>
+                    <ul>
+                        <li>Click mở tool hiện bên sidepanel -> Click nút Nâng cấp.</li>
+                        <li>Nhập & kích hoạt License Key đã nhận trong Gumroad.</li>
+                    </ul>
                 </section>
 
-                <section id="video-tab">
-                    <h2>🎬 3. TÍNH NĂNG: TAB VIDEO</h2>
-                    <p>Dùng để tạo video từ văn bản (Prompt).</p>
+                <section id="huong-dan">
+                    <h2>⚙️ III. HƯỚNG DẪN SỬ DỤNG</h2>
+                    <p class="highlight-text" style="color: var(--accent-red); font-weight: bold;">Note: Bắt buộc phải ở
+                        giao diện làm việc của flow.</p>
+                    <p>Ví dụ: tạo <em>text to video</em> thì phải bật <strong>Tab Video</strong> trên tool để chạy -
+                        <strong>VÀ NGƯỢC LẠI</strong>. Cùng tạo Video nhưng khác mode (ví dụ text to video với frame to
+                        video) cũng không chạy được.</p>
+                    <p><em>Nếu không khớp sẽ có thông báo lỗi -> Bạn chỉnh lại là chạy được.</em></p>
 
-                    <h3>A. Giao diện chính:</h3>
-                    <div class="screenshot-box">
-                        <img src="assets/images/video_tab_vi.png" alt="Giao diện Video Tab" class="img-responsive"
-                            onerror="this.style.display='none'">
-                    </div>
+                    <h3>1. Giới thiệu tổng quát</h3>
                     <ul>
-                        <li><strong>Prompt Input:</strong> Nhập list Prompt mô tả Video. Hỗ trợ nhiều dòng (Mỗi dòng là
-                            1 Prompt khác nhau).</li>
-                    </ul>
-
-                    <h3>B. Chế độ chạy:</h3>
-                    <ol>
-                        <li><strong>Sequential Mode (Mặc định):</strong>
+                        <li>Có 2 giao diện (2 tab) cho tạo video và tạo ảnh: <strong>Tab Video</strong> và <strong>Tab
+                                Image</strong>.</li>
+                        <li>Có 2 tính năng chạy Auto là:
                             <ul>
-                                <li>Chạy lần lượt từng dòng prompt từ trên xuống dưới.</li>
-                                <li><strong>Quota:</strong> Trừ <strong>1 credit</strong> mỗi lần chạy.</li>
-                                <li>Phù hợp khi bạn muốn kiểm soát từng video.</li>
+                                <li><strong>Sequential:</strong> Chạy tuần tự từng prompt.</li>
+                                <li><strong>Batch:</strong> Chạy song song nhiều prompt cùng lúc.</li>
                             </ul>
                         </li>
-                        <li><strong>Batch Mode (Chế độ Hàng loạt) 🚀:</strong>
-                            <ul>
-                                <li>Bật nút gạt <strong>"Chế độ Batch Mode"</strong>.</li>
-                                <li>Create tối đa <strong>5 queue</strong> cùng lúc.</li>
-                                <li>Tool sẽ create từng prompt cho đến khi đủ số batch size trong một thời điểm.</li>
-                                <li><strong>Quota:</strong> Trừ <strong>2 credits</strong> mỗi lần chạy (cho cả lô nhiều
-                                    prompts).</li>
-                            </ul>
-                        </li>
-                    </ol>
-
-                    <h3>C. Cách chọn ảnh:</h3>
-                    <ul>
-                        <li><strong>Chọn ảnh:</strong> Nhấn nút để chọn file ảnh từ máy tính (Có thể chọn nhiều ảnh).
-                        </li>
-                        <li><strong>Xóa ảnh:</strong> Click vào ảnh để xóa.</li>
                     </ul>
 
-                    <h3>D. Các chế độ ghép thêm ảnh (Pairing Mode):</h3>
-                    <ol>
-                        <li><strong>None (Text-to-Video only):</strong> Không dùng ảnh, chỉ dùng prompt text.</li>
-                        <li><strong>1-to-1 (Frames-to-Video):</strong> Mỗi prompt đi kèm 1 ảnh (Làm Start Frame).</li>
-                        <li><strong>Static (Frames-to-Video):</strong> Dùng 1-2 ảnh (Start/End Frame) áp dụng cho tất cả
-                            các prompt.</li>
-                        <li><strong>Start-End (Frames-to-Video):</strong> Dùng cặp 2 ảnh (Start & End) theo thứ tự cho
-                            mỗi prompt.</li>
-                        <li><strong>Ingredient 1-to-1:</strong> Upload tối đa 3 ảnh/prompt để tham chiếu.</li>
-                        <li><strong>Ingredient Static:</strong> Upload tối đa 3 ảnh dùng chung cho tất cả prompt.</li>
-                    </ol>
-                </section>
-
-                <section id="image-tab">
-                    <h2>🎨 4. TÍNH NĂNG: TAB CREATE IMAGE</h2>
-                    <p>Dùng để tạo ảnh từ văn bản. Chức năng này tự động chuyển giao diện Flow sang "Create Image".</p>
-
-                    <h3>A. Giao diện chính:</h3>
+                    <!-- 📸 ẢNH MINH HỌA GIAO DIỆN CHUNG -->
                     <div class="screenshot-box">
-                        <img src="assets/images/image_tab_vi.png" alt="Giao diện Image Tab" class="img-responsive"
+                        <!-- Hãy thay thế src bên dưới bằng ảnh thực tế của bạn -->
+                        <img src="assets/images/general_interface_vi.png" alt="Giao diện chung" class="img-responsive"
                             onerror="this.style.display='none'">
                     </div>
+
+                    <h3>2. Set cấu hình chạy & các tính năng</h3>
+
+                    <h4>a. Cấu hình tên file và chất lượng tải</h4>
+                    <p>File lưu ra sẽ nằm ở Folder <code>FlowVideos</code>. Tên file sẽ được lưu theo thứ tự prompt và
+                        prefix.</p>
+
+                    <h4>b. Cấu hình nâng cao</h4>
+                    <p>Bạn có thể setting theo ý muốn và nhu cầu riêng (Delay, Max Retries, v.v.).</p>
+
+                    <h4>c. Cấu hình Upload Image</h4>
+                    <p>Sử dụng cho chế độ <strong>Image to Video</strong> hoặc <strong>Image to Image</strong>.</p>
+
+                    <h4>d. Cấu hình Prompt Input</h4>
                     <ul>
-                        <li><strong>Prompt:</strong> Nhập Prompts mô tả ảnh.</li>
-                        <li><strong>Batch Mode:</strong> Tạo đồng thời nhiều prompts cùng lúc.</li>
-                        <li><strong>Upscale:</strong> Tự động hỗ trợ Upscale lên 2K/4K.</li>
+                        <li>Mỗi prompt cách nhau 1 dòng - có bộ đếm prompt.</li>
+                        <li>Có các nút: Lưu prompt, Load prompt, Upload file <code>.txt</code>, Xuất file
+                            <code>.txt</code>, Xóa prompt.</li>
+                        <li><strong>Chế độ custom thứ tự:</strong> Có thể lặp prompt (Chỉ có ở gói Lifetime).</li>
                     </ul>
 
-                    <h3>B. Chế độ Image-to-Image (Tạo ảnh từ ảnh tham chiếu) 📸:</h3>
+                    <h4>e. Các cấu hình chạy khác</h4>
                     <ul>
-                        <li><strong>Chọn ảnh:</strong> Upload tối đa 10 ảnh tham chiếu.</li>
-                        <li><strong>Các chế độ ghép ảnh:</strong>
-                            <ol>
-                                <li><strong>None:</strong> Không dùng ảnh.</li>
-                                <li><strong>1-to-1:</strong> Mỗi prompt đi kèm với một số lượng ảnh nhất định.</li>
-                                <li><strong>Static:</strong> Dùng toàn bộ số ảnh đã upload làm tham chiếu cho
-                                    <strong>tất cả</strong> prompt.
-                                </li>
-                            </ol>
+                        <li><strong>Chạy mode sequence bình thường:</strong> chạy xong prompt nào tải prompt đó.</li>
+                        <li><strong>Chạy mode Batch bình thường:</strong> create prompt 1 lượt rồi Download sau.</li>
+                        <li><strong>Create Only:</strong> chỉ create - không Download (chỉ gói Lifetime).</li>
+                        <li><strong>Download All:</strong> chỉ Download - logic tải giống Batch mode (chỉ gói Lifetime).
                         </li>
                     </ul>
 
-                    <h3>C. Quota Image:</h3>
+                    <h4>f. Các tính năng khác</h4>
                     <ul>
-                        <li><strong>Sequential:</strong> Trừ <strong>1 credit</strong> mỗi lần bấm "Run".</li>
-                        <li><strong>Batch:</strong> Trừ <strong>1 credit</strong> mỗi lần bấm "Run".</li>
+                        <li>Thanh tiến trình và Preview các task đã hoàn thành + Bộ đếm thời gian.</li>
+                        <li>Ô Logs để kiểm tra & báo cáo tiến độ.</li>
+                        <li>Ô báo Prompt lỗi - thứ tự prompt lỗi.</li>
                     </ul>
+
+                    <h3>3. Thao tác và quy trình chạy hiệu quả</h3>
+                    <div
+                        style="background: rgba(245, 166, 35, 0.1); padding: 1rem; border-left: 3px solid var(--primary); border-radius: 4px; margin-bottom: 1.5rem;">
+                        <strong>NOTE:</strong>
+                        <ul style="margin-bottom: 0;">
+                            <li>Set và khớp đúng mode và cấu hình muốn chạy.</li>
+                            <li>Nên chạy <strong>mode Batch</strong> để tối ưu tốc độ.</li>
+                            <li>Kiểm tra prompt xem có prompt nào có khả năng vi phạm policy không.</li>
+                            <li>Chạy nhanh và mượt nhất ở chất lượng <strong>720P (video)</strong> và <strong>1K
+                                    (Image)</strong> vì không phải click button đợi upscale - tải thẳng khi hoàn thiện.
+                            </li>
+                        </ul>
+                    </div>
+                    <ol>
+                        <li><strong>B1:</strong> Set cấu hình trên Flow Web.</li>
+                        <li><strong>B2:</strong> Set cấu hình trên Tool.</li>
+                    </ol>
                 </section>
 
                 <section id="quota">
-                    <h2>⚠️ 5. HỆ THỐNG QUOTA & LƯU Ý</h2>
+                    <h2>⚠️ IV. HỆ THỐNG QUOTA & LƯU Ý</h2>
 
                     <h3>Cách tính Credit (Quota):</h3>
+                    <p>Để đảm bảo công bằng và hiệu quả, hệ thống tính phí quota như sau:</p>
                     <table>
                         <thead>
                             <tr>
@@ -587,62 +587,71 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><strong>Video</strong></td>
+                                <td>Video</td>
                                 <td>Sequential</td>
                                 <td><strong>-1 credit</strong></td>
                                 <td>Chạy từng cái một.</td>
                             </tr>
                             <tr>
-                                <td><strong>Video</strong></td>
-                                <td><strong>Batch</strong></td>
+                                <td>Video</td>
+                                <td>Batch</td>
                                 <td><strong>-2 credits</strong></td>
-                                <td>Chạy nhiều prompts cùng lúc (<strong>Khuyên dùng</strong>).</td>
+                                <td>Chạy nhiều prompts cùng lúc (Khuyên dùng).</td>
                             </tr>
                             <tr>
-                                <td><strong>Image</strong></td>
+                                <td>Image</td>
                                 <td>Sequential</td>
                                 <td><strong>-1 credit</strong></td>
-                                <td></td>
+                                <td>Chạy từng cái một.</td>
                             </tr>
                             <tr>
-                                <td><strong>Image</strong></td>
-                                <td><strong>Batch</strong></td>
+                                <td>Image</td>
+                                <td>Batch</td>
                                 <td><strong>-1 credit</strong></td>
-                                <td>Chạy nhiều prompts cùng lúc.</td>
+                                <td>Chạy nhiều prompts cùng lúc (Khuyên dùng).</td>
                             </tr>
                         </tbody>
                     </table>
+                    <p><em>(Rê chuột vào thanh "Video" hoặc "Image" trên tool để xem cách tính quota bất cứ lúc
+                            nào)</em></p>
+                    <p><strong>Credits</strong> ở đây là số lượt chạy (có thể chạy 1 prompt hoặc nhiều prompts trong
+                        lượt).</p>
+
+                    <h3>Giới hạn số prompts chạy đồng thời (max Batch):</h3>
+                    <ul>
+                        <li><strong>Gói Free:</strong> 2 prompts chạy cùng lúc.</li>
+                        <li><strong>Gói Trial/Standard:</strong> 3 prompts chạy cùng lúc.</li>
+                        <li><strong>Gói Unlimited - Lifetime:</strong> 5 prompts chạy cùng lúc.</li>
+                    </ul>
 
                     <h3>Lỗi thường gặp:</h3>
                     <ul>
-                        <li><strong>Mode Mismatch:</strong> Sai chế độ giữa Tool và Web Flow. -> <em>Khắc phục: Chuyển
-                                chế độ web cho khớp.</em></li>
-                        <li><strong>Limit Exceeded:</strong> Vượt quá giới hạn gói (ví dụ Free chạy quá 5 prompt). ->
-                            <em>Khắc phục: Giảm prompt hoặc nâng cấp.</em>
+                        <li><strong>Mode Mismatch (Sai chế độ):</strong> Nếu bạn đang ở Tab Video trên tool, nhưng trang
+                            web Flow lại đang ở trang "Create Image" -> Tool sẽ hiện cảnh báo đỏ.<br><em>Khắc phục: Hãy
+                                bấm chuyển chế độ trên web Flow về đúng chế độ tool đang chọn.</em></li>
+                        <li><strong>Limit Exceeded (Vượt quá giới hạn):</strong> Số lượng prompt hoặc Batch Size vượt
+                            quá quyền lợi.<br><em>Khắc phục: Xóa bớt prompt hoặc nâng cấp gói Standard/Premium.</em>
                         </li>
-                        <li><strong>Quota Exhausted:</strong> Hết lượt trong ngày. -> <em>Khắc phục: Chờ 24h hoặc nâng
-                                cấp.</em></li>
+                        <li><strong>Quota Exhausted (Hết lượt):</strong> Hết lượt trong ngày.<br><em>Khắc phục: Chờ 24h
+                                hoặc nâng cấp.</em></li>
                     </ul>
 
                     <h3>📞 Hỗ trợ:</h3>
-                    <p>Nếu gặp lỗi, vui lòng liên hệ Admin để được hỗ trợ. Chúc bạn sáng tạo vui vẻ với FlowForge!</p>
+                    <p>Nếu gặp lỗi, vui lòng liên hệ Admin qua Email hoặc Telegram để được hỗ trợ.</p>
+                    <p><strong>Chúc bạn sáng tạo vui vẻ với FlowForge!</strong></p>
                 </section>
             </div>
 
-            <!-- ====== ENGLISH CONTENT ====== -->
+            <!-- ====== ENGLISH CONTENT (Preserved) ====== -->
             <div id="content-en" style="display:none;">
                 <h1>FlowForge Automator User Guide</h1>
                 <p>Welcome to <strong>FlowForge Automator</strong> - The ultimate tool for automating Video and Image
                     creation on the Flow platform.</p>
                 <hr style="border:0; border-top:1px solid var(--border-color); margin: 2rem 0;">
 
-                <!-- 📸 SUGGESTED IMAGE SPOT (PASTE YOUR IMAGE CODE HERE) -->
-
                 <section id="installation">
                     <h2>🚀 1. INSTALLATION</h2>
                     <p>The tool operates as a <strong>Chrome Extension</strong>.</p>
-
-                    <!-- 📸 PASTE IMAGE CODE HERE IF NEEDED -->
 
                     <!-- 📸 INSTALLATION SCREENSHOT HERE -->
 
@@ -867,7 +876,10 @@
     <!-- Scripts -->
     <script>
         // Language Toggle Logic
+        let currentLang = 'vi';
+
         function setLang(lang) {
+            currentLang = lang;
             const viContent = document.getElementById('content-vi');
             const enContent = document.getElementById('content-en');
             const viSidebar = document.getElementById('sidebar-vi');
@@ -898,7 +910,49 @@
                 document.documentElement.lang = 'en';
                 localStorage.setItem('flowforge_guide_lang', 'en');
             }
+
+            // Update active link immediately after switch
+            updateActiveLink();
         }
+
+        // Scroll Spy Logic
+        function updateActiveLink() {
+            const activeContainerId = currentLang === 'vi' ? 'content-vi' : 'content-en';
+            const sections = document.querySelectorAll(`#${activeContainerId} section[id]`);
+
+            // Limit sidebar links to the active sidebar
+            const activeSidebarId = currentLang === 'vi' ? 'sidebar-vi' : 'sidebar-en';
+            const navLinks = document.querySelectorAll(`#${activeSidebarId} .sidebar-link`);
+
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                // Check if scroll is near section
+                if (window.scrollY >= (sectionTop - 150)) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            // Clear all active states first
+            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+
+            if (currentSection) {
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === '#' + currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+            } else {
+                // Default to first link if at top
+                if (window.scrollY < 200 && navLinks.length > 0) {
+                    navLinks[0].classList.add('active');
+                }
+            }
+        }
+
+        // Debounce or just raw scroll listener
+        window.addEventListener('scroll', updateActiveLink);
 
         // Initialize from LocalStorage or Default
         document.addEventListener('DOMContentLoaded', () => {
@@ -906,6 +960,7 @@
             setLang(savedLang);
         });
     </script>
+
 </body>
 
 </html>
