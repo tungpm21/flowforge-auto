@@ -1,0 +1,1928 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowForge Automator - Tự động hóa Veo3/Flow</title>
+    <meta name="description"
+        content="Công cụ tự động hóa tạo Video và Image trên Google Flow/Veo3. Miễn phí 5 runs/ngày!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Theme Colors - aiskill26 inspired */
+            --bg-dark: #0d0d0d;
+            --bg-card: #161616;
+            --primary: #f5a623;
+            /* Orange */
+            --primary-glow: rgba(245, 166, 35, 0.4);
+            --secondary: #22d3ee;
+            /* Teal */
+            --secondary-glow: rgba(34, 211, 238, 0.4);
+            --accent-red: #ff4d4d;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --border-color: #262626;
+
+            /* Gradients */
+            --gradient-title: linear-gradient(135deg, #f5a623 0%, #ff6b35 100%);
+            --gradient-secondary: linear-gradient(135deg, #22d3ee 0%, #0ea5e9 100%);
+
+            /* Spacing */
+            --container-width: 1000px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Scroll offset for fixed header (notification 36px + header 60px) */
+        section[id] {
+            scroll-margin-top: 100px;
+        }
+
+        /* --- Header / Nav --- */
+        .notification-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1002;
+            height: 36px;
+            background-color: #1a1a1a;
+            color: var(--secondary);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .notification-bar span {
+            color: var(--success);
+        }
+
+        /* --- Header / Nav --- */
+        header {
+            position: fixed;
+            top: 36px;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            background: transparent;
+            backdrop-filter: blur(0px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        header.header-scrolled {
+            background: rgba(13, 13, 13, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            top: 36px;
+            /* Sits below notification bar */
+            height: 60px;
+        }
+
+        header .container {
+            max-width: 1200px;
+            /* Wider container for menu */
+        }
+
+        .header-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header.header-scrolled {
+            background: rgba(13, 13, 13, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.8rem 0;
+        }
+
+        .nav-links {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* --- Right Scroll Nav --- */
+        .right-scroll-nav {
+            position: fixed;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1001;
+        }
+
+        .scroll-dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transition: all 0.3s;
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .scroll-dot::after {
+            content: attr(title);
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #fff;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+            white-space: nowrap;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .scroll-dot:hover::after {
+            opacity: 1;
+            right: 25px;
+        }
+
+        .scroll-dot:hover,
+        .scroll-dot.active {
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            transform: scale(1.2);
+        }
+
+        .breadcrumb {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .breadcrumb span {
+            color: var(--primary);
+        }
+
+        .btn-cta-small {
+            background: rgba(245, 166, 35, 0.1);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-cta-small:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-right: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(245, 166, 35, 0.1);
+        }
+
+
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 8rem 0 6rem;
+            /* Increased padding to account for fixed header + bar */
+            position: relative;
+        }
+
+        .quote-block {
+            border-left: 3px solid var(--primary);
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-style: italic;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .quote-sub {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 700px;
+        }
+
+        .hero-title-group {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary);
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            display: block;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #aaa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .highlight-text {
+            background: var(--gradient-title);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .hero-keywords {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .kw-1 {
+            color: var(--secondary);
+        }
+
+        .kw-2 {
+            color: var(--primary);
+        }
+
+        .kw-3 {
+            color: #a855f7;
+        }
+
+        .hero-info {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .info-badge {
+            background: #222;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-badge svg {
+            width: 14px;
+            height: 14px;
+            fill: var(--success, #22c55e);
+        }
+
+        /* --- Terminal Demo --- */
+        .terminal-container {
+            margin-top: 4rem;
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 0.75rem 1rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot-red {
+            background: #ff5f56;
+        }
+
+        .dot-yellow {
+            background: #ffbd2e;
+        }
+
+        .dot-green {
+            background: #27c93f;
+        }
+
+        .terminal-title {
+            margin-left: 1rem;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            color: #ccc;
+            font-size: 0.9rem;
+            min-height: 200px;
+        }
+
+        .cmd {
+            color: #f5a623;
+        }
+
+        .path {
+            color: #22d3ee;
+        }
+
+        .success {
+            color: #22c55e;
+        }
+
+        /* --- Journey Timeline --- */
+        .journey-section {
+            padding: 4rem 0;
+            text-align: center;
+            min-height: calc(100vh - 106px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .journey-intro {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .journey-intro p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .journey-intro .link-free {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .journey-intro .link-trial {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .journey-intro .link-lifetime {
+            color: #a855f7;
+            font-weight: 600;
+        }
+
+        .journey-warning {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: rgba(245, 166, 35, 0.8);
+            margin-top: 0.75rem;
+        }
+
+        /* Timeline Container - 3 column grid */
+        .timeline-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            position: relative;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        /* Timeline Line Background */
+        .timeline-line-bg {
+            position: absolute;
+            top: 32px;
+            left: 16.67%;
+            right: 16.67%;
+            height: 4px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+
+        /* Animated Progress Lines */
+        .timeline-progress {
+            position: absolute;
+            top: 32px;
+            height: 4px;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .timeline-progress-1 {
+            left: 16.67%;
+            width: 33.33%;
+        }
+
+        .timeline-progress-1 .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            animation: progressFill 2s ease-out forwards;
+        }
+
+        .timeline-progress-2 {
+            left: 50%;
+            width: 33.33%;
+        }
+
+        .timeline-progress-2 .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #a855f7);
+            animation: progressFill 2s ease-out 1s forwards;
+        }
+
+        @keyframes progressFill {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Running Light Particles */
+        .timeline-particles {
+            position: absolute;
+            top: 32px;
+            left: 16.67%;
+            right: 16.67%;
+            height: 4px;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .particle {
+            position: absolute;
+            width: 20px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            animation: particleRun 3s linear infinite;
+        }
+
+        .particle:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .particle:nth-child(2) {
+            animation-delay: 0.75s;
+        }
+
+        .particle:nth-child(3) {
+            animation-delay: 1.5s;
+        }
+
+        .particle:nth-child(4) {
+            animation-delay: 2.25s;
+        }
+
+        @keyframes particleRun {
+            0% {
+                left: -20px;
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* Timeline Node */
+        .timeline-item {
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            cursor: pointer;
+        }
+
+        .timeline-item .node-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item .node-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 4px solid;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            background: var(--bg-dark);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .timeline-item:hover .node-circle {
+            transform: scale(1.1);
+        }
+
+        .timeline-item.node-free .node-circle {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .timeline-item.node-free:hover .node-circle {
+            box-shadow: 0 0 25px var(--secondary-glow);
+        }
+
+        .timeline-item.node-trial .node-circle {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .timeline-item.node-trial:hover .node-circle {
+            box-shadow: 0 0 25px var(--primary-glow);
+        }
+
+        .timeline-item.node-lifetime .node-circle {
+            border-color: #a855f7;
+            color: #a855f7;
+        }
+
+        .timeline-item.node-lifetime:hover .node-circle {
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.4);
+        }
+
+        /* Completion Badge */
+        .completion-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 20px;
+            height: 20px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--bg-dark);
+        }
+
+        .completion-badge span {
+            font-size: 10px;
+            color: var(--bg-dark);
+            font-weight: bold;
+        }
+
+        .timeline-item .node-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-item.node-free .node-title {
+            color: var(--secondary);
+        }
+
+        .timeline-item.node-trial .node-title {
+            color: var(--primary);
+        }
+
+        .timeline-item.node-lifetime .node-title {
+            color: #a855f7;
+        }
+
+        .timeline-item .node-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-item .node-subtitle.completed {
+            color: #22c55e;
+            font-weight: 500;
+        }
+
+        /* Tag Badges */
+        .tag-badges {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .tag-badge {
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .timeline-item.node-free .tag-badge {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--secondary);
+        }
+
+        .timeline-item.node-trial .tag-badge {
+            background: rgba(245, 166, 35, 0.1);
+            color: var(--primary);
+        }
+
+        .timeline-item.node-lifetime .tag-badge {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+
+        /* Bundle CTA */
+        .bundle-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(245, 166, 35, 0.1);
+            border: 1px solid rgba(245, 166, 35, 0.3);
+            border-radius: 8px;
+            margin-top: 2rem;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+        }
+
+        .bundle-cta:hover {
+            background: rgba(245, 166, 35, 0.2);
+        }
+
+        .bundle-dots {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .bundle-dots .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .bundle-dots .dot-1 {
+            background: var(--secondary);
+        }
+
+        .bundle-dots .dot-2 {
+            background: var(--primary);
+        }
+
+        .bundle-dots .dot-3 {
+            background: #a855f7;
+        }
+
+        .bundle-dots .line {
+            width: 24px;
+            height: 2px;
+            background: rgba(245, 166, 35, 0.5);
+        }
+
+        .bundle-cta span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        /* --- Feature Cards (2-col) --- */
+        .features-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-col-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-col-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-secondary);
+            opacity: 0.7;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-list {
+            list-style: none;
+        }
+
+        .card-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #262626;
+            color: #ccc;
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .card-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* --- Comparison Section --- */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .comp-card {
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .comp-bad {
+            background: rgba(255, 77, 77, 0.05);
+            border: 1px solid rgba(255, 77, 77, 0.2);
+        }
+
+        .comp-good {
+            background: rgba(34, 211, 238, 0.05);
+            border: 1px solid rgba(34, 211, 238, 0.2);
+        }
+
+        .comp-header {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .comp-bad .comp-header {
+            color: var(--accent-red);
+        }
+
+        .comp-good .comp-header {
+            color: var(--secondary);
+        }
+
+        .comp-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .comp-bad li::before {
+            content: 'x';
+            color: var(--accent-red);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .comp-good li::before {
+            content: '+';
+            color: var(--secondary);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* --- Numbered List --- */
+        .numbered-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .num-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .num-badge {
+            min-width: 32px;
+            height: 32px;
+            background: #262626;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border: 1px solid #333;
+        }
+
+        .num-content h4 {
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .num-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- Benefits Grid --- */
+        .benefits-section {
+            padding: 4rem 0;
+            text-align: center;
+            min-height: calc(100vh - 106px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bnf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .bnf-card {
+            background: #1a1a1a;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: left;
+            border: 1px solid #333;
+            transition: all 0.3s;
+        }
+
+        .bnf-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .bnf-icon {
+            margin-bottom: 1rem;
+        }
+
+        .bnf-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .bnf-card p {
+            font-size: 0.9rem;
+            color: #999;
+        }
+
+        /* --- Pricing Section --- */
+        .price-section {
+            padding: 4rem 0;
+            text-align: center;
+            min-height: calc(100vh - 106px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .pricing-cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .price-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .price-card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(245, 166, 35, 0.1);
+            transform: scale(1.05);
+        }
+
+        .best-tag {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-title);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .price-tier {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-sub {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .price-feat-list {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .price-feat-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #222;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .price-feat-list li::before {
+            content: '✓';
+            color: var(--secondary);
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .btn-price {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: auto;
+        }
+
+        .btn-price-normal {
+            background: #333;
+            color: #fff;
+        }
+
+        .btn-price-normal:hover {
+            background: #444;
+        }
+
+        .btn-price-primary {
+            background: var(--gradient-title);
+            color: #000;
+        }
+
+        .btn-price-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* --- Download & Footer --- */
+        .download-box {
+            background: linear-gradient(135deg, #111 0%, #0d0d0d 100%);
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        footer {
+            border-top: 1px solid #222;
+            padding: 2rem 0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Notification Bar -->
+    <!-- Notification Bar -->
+    <div class="notification-bar">
+        <div class="container">
+            ⚡ <span data-i18n="notification.bonus">BONUS:</span> <span data-i18n="notification.text">Nhận ngay 7 ngày
+                Trial miễn phí khi tải hôm nay!</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <!-- Header -->
+        <header>
+            <div class="container header-inner">
+                <div class="breadcrumb">
+                    FlowForge / <span>Auto-Bot</span>
+                </div>
+
+                <nav class="nav-links">
+                    <a href="#hero" class="active" data-i18n="nav.home">Home</a>
+                    <a href="#journey" data-i18n="nav.journey">Journey</a>
+                    <a href="#features" data-i18n="nav.features">Features</a>
+                    <a href="#benefits" data-i18n="nav.benefits">Benefits</a>
+                    <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+                </nav>
+
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <button id="lang-toggle" onclick="toggleLanguage()" class="lang-btn"
+                        style="margin-right: 0;">VN</button>
+                    <a href="#download" class="btn-cta-small" data-i18n="nav.download">Tải miễn phí</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="quote-block">
+                <span class="quote-text" data-i18n="hero.quote">"Ngừng làm việc thủ công. Hãy để AI làm điều đó cho
+                    bạn."</span>
+                <p class="quote-sub" data-i18n="hero.desc">FlowForge Automator giúp bạn tạo hàng trăm video & ảnh trên
+                    Google Flow/Veo3 chỉ
+                    với 1 cú click. Tự động hóa hoàn toàn quy trình sáng tạo của bạn.</p>
+            </div>
+
+            <div class="hero-title-group">
+                <span class="section-tag" data-i18n="hero.subtitle">// CÔNG CỤ TỰ ĐỘNG HÓA</span>
+                <h1>
+                    FlowForge Automator
+                    <span class="highlight-text">Batch Video & Image Generator</span>
+                </h1>
+
+                <div class="hero-keywords">
+                    <span class="kw-1" data-i18n="hero.tag.auto">TỰ ĐỘNG</span> · <span class="kw-2"
+                        data-i18n="hero.tag.batch">BATCH MODE</span> · <span class="kw-3"
+                        data-i18n="hero.tag.upscale">UPSCALE 4K</span>
+                </div>
+
+                <div class="hero-info">
+                    <div class="info-badge">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <span data-i18n="hero.badge.extension">Chrome Extension</span>
+                    </div>
+                    <div class="info-badge">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <span data-i18n="hero.badge.slots">5 Slots Đồng Thời</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal Demo -->
+            <div class="terminal-container">
+                <div class="terminal-header">
+                    <div class="dot dot-red"></div>
+                    <div class="dot dot-yellow"></div>
+                    <div class="dot dot-green"></div>
+                    <div class="terminal-title">flowforge-demo.sh — 80x24</div>
+                </div>
+                <div class="terminal-body">
+                    <div><span class="path">user@flowforge:~$</span> <span class="cmd">./start_automation.sh
+                            --batch-size=5</span></div>
+                    <div style="margin-top: 5px;">[INFO] Initializing FlowForge Automator...</div>
+                    <div style="margin-top: 5px;">[INFO] Loaded 50 prompts from csv</div>
+                    <div style="margin-top: 5px;">[PROCESS] Starting Batch 1 (Slots: 5/5)</div>
+                    <div style="margin-top: 5px; opacity: 0.8;">&nbsp; ├── Slot 1: Generating "Cyberpunk City"... <span
+                            class="success">✓ DONE (1080p)</span></div>
+                    <div style="margin-top: 2px; opacity: 0.8;">&nbsp; ├── Slot 2: Generating "Anime Girl"... <span
+                            class="success">✓ DONE (1080p)</span></div>
+                    <div style="margin-top: 2px; opacity: 0.8;">&nbsp; ├── Slot 3: Generating "Nature Timelapse"...
+                        <span class="success">✓ DONE (1080p)</span>
+                    </div>
+                    <div style="margin-top: 2px; opacity: 0.8;">&nbsp; ├── Slot 4: Generating "Abstract Art"... <span
+                            class="success">✓ DONE (1080p)</span></div>
+                    <div style="margin-top: 2px; opacity: 0.8;">&nbsp; └── Slot 5: Generating "Space Battle"... <span
+                            class="success">✓ DONE (1080p)</span></div>
+                    <div style="margin-top: 10px;">[SUCCESS] Batch 1 completed in 45s. Starting Batch 2...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Journey Section -->
+        <!-- Journey Section -->
+        <!-- Journey Section -->
+        <section class="journey-section" id="journey">
+            <span class="section-tag" data-i18n="journey.tag">// HÀNH TRÌNH TĂNG TỐC</span>
+            <h2 data-i18n="journey.title">Tại sao nên dùng FlowForge ngay hôm nay?</h2>
+
+            <!-- Intro Paragraph -->
+            <div class="journey-intro">
+                <p data-i18n="journey.intro.text">
+                    <span class="link-free">FREE</span> giúp bạn <strong>trải nghiệm</strong> công cụ →
+                    <span class="link-trial">TRIAL</span> giúp bạn <strong>tăng tốc</strong> sản xuất →
+                    <span class="link-lifetime">LIFETIME</span> cho bạn <strong>quyền lực tối đa</strong>, không giới
+                    hạn.
+                </p>
+                <p class="journey-warning" data-i18n="journey.intro.warning">Thiếu 1 bước = bạn vẫn mất thời gian làm
+                    thủ công.</p>
+            </div>
+
+            <!-- Timeline Grid with Animations -->
+            <div class="timeline-grid">
+                <!-- Timeline Line Background -->
+                <div class="timeline-line-bg"></div>
+
+                <!-- Animated Progress Lines -->
+                <div class="timeline-progress timeline-progress-1">
+                    <div class="progress-bar"></div>
+                </div>
+                <div class="timeline-progress timeline-progress-2">
+                    <div class="progress-bar"></div>
+                </div>
+
+                <!-- Running Light Particles -->
+                <div class="timeline-particles">
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                    <div class="particle"></div>
+                </div>
+
+                <!-- Node 1: Free -->
+                <div class="timeline-item node-free"
+                    onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">
+                    <div class="node-wrapper">
+                        <div class="node-circle">✓</div>
+                        <div class="completion-badge"><span>✓</span></div>
+                    </div>
+                    <div class="node-title" data-i18n="journey.node.free.title">Trải nghiệm</div>
+                    <div class="node-subtitle completed" data-i18n="journey.node.free.status">Đang hoạt động</div>
+                    <div class="tag-badges">
+                        <span class="tag-badge" data-i18n="journey.node.free.tag1">+5 runs/day</span>
+                        <span class="tag-badge" data-i18n="journey.node.free.tag2">+Free</span>
+                    </div>
+                </div>
+
+                <!-- Node 2: Trial -->
+                <div class="timeline-item node-trial"
+                    onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">
+                    <div class="node-wrapper">
+                        <div class="node-circle">02</div>
+                    </div>
+                    <div class="node-title" data-i18n="journey.node.trial.title">Tăng tốc</div>
+                    <div class="node-subtitle" data-i18n="journey.node.trial.status">$5 · 7 days</div>
+                    <div class="tag-badges">
+                        <span class="tag-badge" data-i18n="journey.node.trial.tag1">+20 runs</span>
+                        <span class="tag-badge" data-i18n="journey.node.trial.tag2">+Batch</span>
+                    </div>
+                </div>
+
+                <!-- Node 3: Lifetime -->
+                <div class="timeline-item node-lifetime"
+                    onclick="document.getElementById('pricing').scrollIntoView({behavior: 'smooth'})">
+                    <div class="node-wrapper">
+                        <div class="node-circle">03</div>
+                    </div>
+                    <div class="node-title" data-i18n="journey.node.lifetime.title">Không giới hạn</div>
+                    <div class="node-subtitle" data-i18n="journey.node.lifetime.status">$10 · Vĩnh viễn</div>
+                    <div class="tag-badges">
+                        <span class="tag-badge" data-i18n="journey.node.lifetime.tag1">+Unlimited</span>
+                        <span class="tag-badge" data-i18n="journey.node.lifetime.tag2">+VIP</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bundle CTA -->
+            <a href="#pricing" class="bundle-cta">
+                <div class="bundle-dots">
+                    <div class="dot dot-1"></div>
+                    <div class="line"></div>
+                    <div class="dot dot-2"></div>
+                    <div class="line"></div>
+                    <div class="dot dot-3"></div>
+                </div>
+                <span data-i18n="journey.bundle">Tiết kiệm 90% thời gian làm việc</span>
+            </a>
+        </section>
+
+        <!-- Feature Cards 2-Col -->
+        <!-- Feature Cards 2-Col -->
+        <!-- Feature Cards 2-Col -->
+        <section class="container" style="padding: 2rem 1.5rem;" id="features">
+            <span class="section-tag" data-i18n="features.tag">// TÍNH NĂNG CỐT LÕI</span>
+            <h2 data-i18n="features.title">Công cụ All-in-One cho Creator</h2>
+
+            <div class="features-cols">
+                <!-- Video Tab -->
+                <div class="feature-col-card">
+                    <div class="card-title">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--secondary)">
+                            <path d="M10 8l6 4-6 4V8z" />
+                            <rect x="2" y="2" width="20" height="20" rx="2" stroke="var(--secondary)" fill="none"
+                                stroke-width="2" />
+                        </svg>
+                        <h3>Video Tab</h3>
+                    </div>
+                    <ul class="card-list">
+                        <li><span class="check-icon">✓</span> <span
+                                data-i18n="features.video.list1"><strong>Text-to-Video:</strong> Tạo video từ văn
+                                bản, hỗ trợ 720p/1080p.</span></li>
+                        <li><span class="check-icon">✓</span> <span data-i18n="features.video.list2"><strong>Ingredients
+                                    Mode:</strong> Upload ảnh
+                                style/nhân vật tham chiếu.</span></li>
+                        <li><span class="check-icon">✓</span> <span data-i18n="features.video.list3"><strong>Start/End
+                                    Frame:</strong> Kiểm soát frame
+                                đầu/cuối của video.</span></li>
+                        <li><span class="check-icon">✓</span> <span data-i18n="features.video.list4"><strong>Auto
+                                    Download:</strong> Tự động tải về khi
+                                hoàn tất.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Image Tab -->
+                <div class="feature-col-card">
+                    <div class="card-title">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--primary)">
+                            <rect x="3" y="3" width="18" height="18" rx="2" stroke="var(--primary)" fill="none"
+                                stroke-width="2" />
+                            <circle cx="8.5" cy="8.5" r="1.5" fill="var(--primary)" />
+                            <path d="M21 15l-5-5L5 21" stroke="var(--primary)" stroke-width="2" />
+                        </svg>
+                        <h3>Image Tab</h3>
+                    </div>
+                    <ul class="card-list">
+                        <li><span class="check-icon">✓</span> <span
+                                data-i18n="features.image.list1"><strong>Text-to-Image:</strong> Tạo ảnh chất lượng
+                                cao.</span></li>
+                        <li><span class="check-icon">✓</span> <span data-i18n="features.image.list2"><strong>Auto
+                                    Upscale:</strong> Tự động upscale lên
+                                2K, 4K.</span></li>
+                        <li><span class="check-icon">✓</span> <span
+                                data-i18n="features.image.list3"><strong>Image-to-Image:</strong> Dùng ảnh gốc để
+                                định hướng style.</span></li>
+                        <li><span class="check-icon">✓</span> <span data-i18n="features.image.list4"><strong>Preview
+                                    Panel:</strong> Xem trước ảnh full
+                                tỉ lệ.</span></li>
+                    </ul>
+                </div>
+                <!-- Comparison Bad -->
+                <div class="comp-card comp-bad">
+                    <span class="comp-header" data-i18n="comp.bad.title">// VẤN ĐỀ HIỆN TẠI</span>
+                    <ul class="comp-list" style="list-style: none; padding: 0;">
+                        <li data-i18n="comp.bad.1">Mất hàng giờ để click tạo từng video thủ công</li>
+                        <li data-i18n="comp.bad.2">Phải canh chừng để tải video về máy</li>
+                        <li data-i18n="comp.bad.3">Không thể chạy nhiều prompts cùng lúc</li>
+                        <li data-i18n="comp.bad.4">Mất prompts nếu lỡ tắt tab trình duyệt</li>
+                    </ul>
+                </div>
+
+                <!-- Comparison Good -->
+                <div class="comp-card comp-good">
+                    <span class="comp-header" data-i18n="comp.good.title">// SAU KHI DÙNG FLOWFORGE</span>
+                    <ul class="comp-list" style="list-style: none; padding: 0;">
+                        <li data-i18n="comp.good.1">1 Click chạy hàng trăm prompts tự động</li>
+                        <li data-i18n="comp.good.2">Tự động download và đặt tên file thông minh</li>
+                        <li data-i18n="comp.good.3">Chạy 5 slots đồng thời (Batch Mode)</li>
+                        <li data-i18n="comp.good.4">Tự động retry và lưu lại prompts</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Numbered Features -->
+        <!-- Numbered Features -->
+        <section class="container"
+            style="padding: 4rem 1.5rem; background: #111; border-radius: 20px; border: 1px solid #222;">
+            <span class="section-tag" data-i18n="section.numbered">// CHI TIẾT TÍNH NĂNG</span>
+            <h2 data-i18n="numbered.title">Tại sao 1,000+ creators chọn FlowForge?</h2>
+
+            <div class="numbered-grid">
+                <div class="num-item">
+                    <div class="num-badge">01</div>
+                    <div class="num-content">
+                        <h4 data-i18n="numbered.1.title">Batch Mode Tốc Độ Cao</h4>
+                        <p data-i18n="numbered.1.desc">Chạy 5 slots generation cùng lúc. Tự động refill queue khi có
+                            slot trống. Tăng tốc độ gấp 10
+                            lần.</p>
+                    </div>
+                </div>
+
+                <div class="num-item">
+                    <div class="num-badge">02</div>
+                    <div class="num-content">
+                        <h4 data-i18n="numbered.2.title">Smart Download</h4>
+                        <p data-i18n="numbered.2.desc">Không cần canh tải file. Extension tự tải về thư mục riêng, đặt
+                            tên file theo ID và prompt để
+                            dễ quản lý.</p>
+                    </div>
+                </div>
+
+                <div class="num-item">
+                    <div class="num-badge">03</div>
+                    <div class="num-content">
+                        <h4 data-i18n="numbered.3.title">Auto Retry & Anti-Ban</h4>
+                        <p data-i18n="numbered.3.desc">Gặp lỗi mạng? Hệ thống tự retry. Anti-ban delay thông minh giúp
+                            bảo vệ tài khoản Google của
+                            bạn.</p>
+                    </div>
+                </div>
+
+                <div class="num-item">
+                    <div class="num-badge">04</div>
+                    <div class="num-content">
+                        <h4 data-i18n="numbered.4.title">Prompt Management</h4>
+                        <p data-i18n="numbered.4.desc">Lưu và quản lý prompts ngay trong extension. Import/Export
+                            prompts dễ dàng qua file CSV/JSON.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Grid -->
+        <!-- Benefits Grid -->
+        <section class="container benefits-section" id="benefits">
+            <span class="section-tag" data-i18n="section.benefits">// GIÁ TRỊ</span>
+            <h2 data-i18n="benefits.title">Bạn nhận được gì?</h2>
+
+            <div class="bnf-grid">
+                <div class="bnf-card">
+                    <div class="bnf-icon">🚀</div>
+                    <h4 data-i18n="benefits.1.title">Cài đặt 1 click</h4>
+                    <p data-i18n="benefits.1.desc">Chrome Extension cài đặt dễ dàng, không cần setup phức tạp.</p>
+                </div>
+                <div class="bnf-card">
+                    <div class="bnf-icon">⚡</div>
+                    <h4 data-i18n="benefits.2.title">Tốc độ x10</h4>
+                    <p data-i18n="benefits.2.desc">Tăng năng suất làm việc gấp 10 lần so với làm thủ công.</p>
+                </div>
+                <div class="bnf-card">
+                    <div class="bnf-icon">🔒</div>
+                    <h4 data-i18n="benefits.3.title">An toàn & Bảo mật</h4>
+                    <p data-i18n="benefits.3.desc">Mọi data được xử lý local trên trình duyệt của bạn.</p>
+                </div>
+                <div class="bnf-card">
+                    <div class="bnf-icon">🔄</div>
+                    <h4 data-i18n="benefits.4.title">Auto Update</h4>
+                    <p data-i18n="benefits.4.desc">Tự động cập nhật tính năng mới nhất miễn phí.</p>
+                </div>
+                <div class="bnf-card">
+                    <div class="bnf-icon">🎁</div>
+                    <h4 data-i18n="benefits.5.title">Hỗ trợ 24/7</h4>
+                    <p data-i18n="benefits.5.desc">Nhóm hỗ trợ riêng cho thành viên VIP qua Zalo/Discord.</p>
+                </div>
+                <div class="bnf-card">
+                    <div class="bnf-icon">💎</div>
+                    <h4 data-i18n="benefits.6.title">Chất lượng gốc</h4>
+                    <p data-i18n="benefits.6.desc">Download video/ảnh chất lượng gốc, không watermark.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <!-- Pricing Section -->
+        <section class="container price-section" id="pricing">
+            <span class="section-tag" data-i18n="section.pricing">// PRICING</span>
+            <h2 data-i18n="pricing.title">Bắt đầu miễn phí, nâng cấp khi cần</h2>
+
+            <div class="pricing-cols">
+                <!-- Free -->
+                <div class="price-card">
+                    <div class="price-tier" data-i18n="pricing.free.tier">Free (Bonus)</div>
+                    <div class="price-amount">$0</div>
+                    <span class="price-sub" data-i18n="pricing.free.period">/7 ngày</span>
+                    <ul class="price-feat-list">
+                        <li style="color: var(--primary); font-weight: 700;" data-i18n="pricing.free.feat1">🎁 Tặng 7
+                            ngày gói Trial</li>
+                        <li data-i18n="pricing.free.feat2">5 lượt run/ngày</li>
+                        <li data-i18n="pricing.free.feat3">Max 5 prompts/batch</li>
+                    </ul>
+                    <a href="https://aiwithmt.gumroad.com/l/flowforge-free" target="_blank"
+                        class="btn-price btn-price-normal" data-i18n="pricing.button.free">Tải miễn phí</a>
+                </div>
+
+                <!-- Trial -->
+                <div class="price-card">
+                    <div class="price-tier">Trial</div>
+                    <div class="price-amount">$5</div>
+                    <span class="price-sub" data-i18n="pricing.trial.period">Một lần</span>
+                    <ul class="price-feat-list">
+                        <li data-i18n="pricing.trial.feat1">20 lượt run/ngày</li>
+                        <li data-i18n="pricing.trial.feat2">Max 20 prompts/batch</li>
+                        <li data-i18n="pricing.trial.feat3">Multi-PC Support</li>
+                    </ul>
+                    <a href="https://aiwithmt.gumroad.com/l/flowforge-trial" target="_blank"
+                        class="btn-price btn-price-normal" data-i18n="pricing.button.trial">Mua
+                        Trial</a>
+                </div>
+
+                <!-- Lifetime -->
+                <div class="price-card featured">
+                    <span class="best-tag" data-i18n="pricing.lifetime.tag">Phổ biến nhất</span>
+                    <div class="price-tier">Lifetime</div>
+                    <div class="price-amount">$10</div>
+                    <span class="price-sub" data-i18n="pricing.lifetime.period">Trọn đời</span>
+                    <ul class="price-feat-list">
+                        <li data-i18n="pricing.lifetime.feat1">UNLIMITED Runs</li>
+                        <li data-i18n="pricing.lifetime.feat2">Unlimited Prompts (999+)</li>
+                        <li data-i18n="pricing.lifetime.feat3">VIP Support & Update</li>
+                    </ul>
+                    <a href="https://aiwithmt.gumroad.com/l/flowforge-lifetime" target="_blank"
+                        class="btn-price btn-price-primary" data-i18n="pricing.button.lifetime">Mua
+                        Lifetime</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download & Footer -->
+        <!-- Download & Footer -->
+        <section class="container download-box" id="download">
+            <h2 style="margin-bottom: 1rem;" data-i18n="download.title">Đã đến lúc nâng cấp workflow của bạn</h2>
+            <p style="color: #999; margin-bottom: 2rem;" data-i18n="download.desc">Tham gia cùng 1,000+ creators đang sử
+                dụng FlowForge mỗi ngày.
+            </p>
+            <a href="#" class="btn-cta-small" style="font-size: 1.2rem; padding: 1rem 2.5rem;"
+                data-i18n="download.button">Tải Extension Ngay</a>
+        </section>
+
+        <footer>
+            <div class="container">
+                <p data-i18n="footer.rights">&copy; 2026 FlowForge Automator. All rights reserved.</p>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem;" data-i18n="footer.support">Support:
+                    tungpm.tvhs@gmail.com</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Right Scroll Nav -->
+    <div class="right-scroll-nav">
+        <a href="#hero" class="scroll-dot active" title="Home"></a>
+        <a href="#journey" class="scroll-dot" title="Journey"></a>
+        <a href="#features" class="scroll-dot" title="Features"></a>
+        <a href="#benefits" class="scroll-dot" title="Benefits"></a>
+        <a href="#pricing" class="scroll-dot" title="Pricing"></a>
+    </div>
+
+</body>
+
+<script>
+    const translations = {
+        vi: {
+            "nav.home": "Home",
+            "nav.features": "Features",
+            "nav.journey": "Journey",
+            "nav.benefits": "Benefits",
+            "nav.pricing": "Pricing",
+            "nav.docs": "Tài liệu",
+            "nav.community": "Cộng đồng",
+            "nav.download": "Tải miễn phí",
+            "notification.bonus": "BONUS:",
+            "notification.text": "Nhận ngay 7 ngày Trial miễn phí khi tải hôm nay!",
+            "hero.quote": "\"Ngừng làm việc thủ công. Hãy để AI làm điều đó cho bạn.\"",
+            "hero.subtitle": "// CÔNG CỤ TỰ ĐỘNG HÓA",
+            "hero.title": "FlowForge Automator<br>Batch Video & Image Generator",
+            "hero.tag.auto": "TỰ ĐỘNG",
+            "hero.tag.batch": "BATCH MODE",
+            "hero.tag.upscale": "UPSCALE 4K",
+            "hero.badge.extension": "Chrome Extension",
+            "hero.badge.slots": "5 Slots Đồng Thời",
+            "hero.desc": "FlowForge Automator giúp bạn tạo hàng trăm video & ảnh trên Google Flow/Veo3 chỉ với 1 cú click. Tự động hóa hoàn toàn quy trình sáng tạo của bạn.",
+            "journey.tag": "// HÀNH TRÌNH TĂNG TỐC",
+            "journey.title": "Tại sao nên dùng FlowForge ngay hôm nay?",
+            "journey.free": "#TrảiNghiệm",
+            "journey.trial": "#TăngTốc",
+            "journey.lifetime": "#Unlimited",
+            "journey.save": "● ● ● Tiết kiệm 90% thời gian làm việc",
+            "journey.intro.text": "<span class='link-free'>FREE</span> giúp bạn <strong>trải nghiệm</strong> công cụ → <span class='link-trial'>TRIAL</span> giúp bạn <strong>tăng tốc</strong> sản xuất → <span class='link-lifetime'>LIFETIME</span> cho bạn <strong>quyền lực tối đa</strong>, không giới hạn.",
+            "journey.intro.warning": "Thiếu 1 bước = bạn vẫn mất thời gian làm thủ công.",
+            "journey.node.free.title": "Trải nghiệm",
+            "journey.node.free.status": "Đang hoạt động",
+            "journey.node.free.tag1": "+5 runs/day",
+            "journey.node.free.tag2": "+Free",
+            "journey.node.trial.title": "Tăng tốc",
+            "journey.node.trial.status": "$5 · 7 days",
+            "journey.node.trial.tag1": "+20 runs",
+            "journey.node.trial.tag2": "+Batch",
+            "journey.node.lifetime.title": "Không giới hạn",
+            "journey.node.lifetime.status": "$10 · Vĩnh viễn",
+            "journey.node.lifetime.tag1": "+Unlimited",
+            "journey.node.lifetime.tag2": "+VIP",
+            "journey.bundle": "Tiết kiệm 90% thời gian làm việc",
+            "features.tag": "// TÍNH NĂNG CỐT LÕI",
+            "features.title": "Công cụ All-in-One cho Creator",
+            "features.video.list1": "<strong>Text-to-Video:</strong> Tạo video từ văn bản, hỗ trợ 720p/1080p.",
+            "features.video.list2": "<strong>Ingredients Mode:</strong> Upload ảnh style/nhân vật tham chiếu.",
+            "features.video.list3": "<strong>Start/End Frame:</strong> Kiểm soát frame đầu/cuối của video.",
+            "features.video.list4": "<strong>Auto Download:</strong> Tự động tải về khi hoàn tất.",
+            "features.image.list1": "<strong>Text-to-Image:</strong> Tạo ảnh chất lượng cao.",
+            "features.image.list2": "<strong>Auto Upscale:</strong> Tự động upscale lên 2K, 4K.",
+            "features.image.list3": "<strong>Image-to-Image:</strong> Dùng ảnh gốc để định hướng style.",
+            "features.image.list4": "<strong>Preview Panel:</strong> Xem trước ảnh full tỉ lệ.",
+            "comp.bad.title": "// VẤN ĐỀ HIỆN TẠI",
+            "comp.bad.1": "Mất hàng giờ để click tạo từng video thủ công",
+            "comp.bad.2": "Phải canh chừng để tải video về máy",
+            "comp.bad.3": "Không thể chạy nhiều prompts cùng lúc",
+            "comp.bad.4": "Mất prompts nếu lỡ tắt tab trình duyệt",
+            "comp.good.title": "// SAU KHI DÙNG FLOWFORGE",
+            "comp.good.1": "1 Click chạy hàng trăm prompts tự động",
+            "comp.good.2": "Tự động download và đặt tên file thông minh",
+            "comp.good.3": "Chạy 5 slots đồng thời (Batch Mode)",
+            "comp.good.4": "Tự động retry và lưu lại prompts",
+            "section.numbered": "// CHI TIẾT TÍNH NĂNG",
+            "numbered.title": "Tại sao 1,000+ creators chọn FlowForge?",
+            "numbered.1.title": "Batch Mode Tốc Độ Cao",
+            "numbered.1.desc": "Chạy 5 slots generation cùng lúc. Tự động refill queue khi có slot trống. Tăng tốc độ gấp 10 lần.",
+            "numbered.2.title": "Smart Download",
+            "numbered.2.desc": "Không cần canh tải file. Extension tự tải về thư mục riêng, đặt tên file theo ID và prompt để dễ quản lý.",
+            "numbered.3.title": "Auto Retry & Anti-Ban",
+            "numbered.3.desc": "Gặp lỗi mạng? Hệ thống tự retry. Anti-ban delay thông minh giúp bảo vệ tài khoản Google của bạn.",
+            "numbered.4.title": "Prompt Management",
+            "numbered.4.desc": "Lưu và quản lý prompts ngay trong extension. Import/Export prompts dễ dàng qua file CSV/JSON.",
+            "section.benefits": "// GIÁ TRỊ",
+            "benefits.title": "Bạn nhận được gì?",
+            "benefits.1.title": "Cài đặt 1 click",
+            "benefits.1.desc": "Chrome Extension cài đặt dễ dàng, không cần setup phức tạp.",
+            "benefits.2.title": "Tốc độ x10",
+            "benefits.2.desc": "Tăng năng suất làm việc gấp 10 lần so với làm thủ công.",
+            "benefits.3.title": "An toàn & Bảo mật",
+            "benefits.3.desc": "Mọi data được xử lý local trên trình duyệt của bạn.",
+            "benefits.4.title": "Auto Update",
+            "benefits.4.desc": "Tự động cập nhật tính năng mới nhất miễn phí.",
+            "benefits.5.title": "Hỗ trợ 24/7",
+            "benefits.5.desc": "Nhóm hỗ trợ riêng cho thành viên VIP qua Zalo/Discord.",
+            "benefits.6.title": "Chất lượng gốc",
+            "benefits.6.desc": "Download video/ảnh chất lượng gốc, không watermark.",
+            "section.pricing": "// PRICING",
+            "pricing.title": "Bắt đầu miễn phí, nâng cấp khi cần",
+            "pricing.free.tier": "Free (Bonus)",
+            "pricing.free.period": "/7 ngày",
+            "pricing.free.feat1": "🎁 Tặng 7 ngày gói Trial",
+            "pricing.free.feat2": "5 lượt run/ngày",
+            "pricing.free.feat3": "Max 5 prompts/batch",
+            "pricing.free.feat4": "Trải nghiệm full tính năng",
+            "pricing.button.free": "Tải miễn phí",
+            "pricing.trial.period": "Một lần",
+            "pricing.trial.feat1": "20 lượt run/ngày",
+            "pricing.trial.feat2": "Max 20 prompts/batch",
+            "pricing.trial.feat3": "Multi-PC Support",
+            "pricing.button.trial": "Mua Trial",
+            "pricing.lifetime.tag": "Phổ biến nhất",
+            "pricing.lifetime.period": "Trọn đời",
+            "pricing.lifetime.feat1": "UNLIMITED Runs",
+            "pricing.lifetime.feat2": "Unlimited Prompts (999+)",
+            "pricing.lifetime.feat3": "VIP Support & Update",
+            "pricing.button.lifetime": "Mua Lifetime",
+            "download.title": "Đã đến lúc nâng cấp workflow của bạn",
+            "download.desc": "Tham gia cùng 1,000+ creators đang sử dụng FlowForge mỗi ngày.",
+            "download.button": "Tải Extension Ngay",
+            "footer.rights": "&copy; 2026 FlowForge Automator. All rights reserved.",
+            "footer.support": "Support: tungpm.tvhs@gmail.com"
+        },
+        en: {
+            "nav.home": "Home",
+            "nav.features": "Features",
+            "nav.journey": "Journey",
+            "nav.benefits": "Benefits",
+            "nav.pricing": "Pricing",
+            "nav.docs": "Docs",
+            "nav.community": "Community",
+            "nav.download": "Download Free",
+            "notification.bonus": "BONUS:",
+            "notification.text": "Get 7-day Free Trial instantly when downloading today!",
+            "hero.quote": "\"Stop manual work. Let AI do it for you.\"",
+            "hero.subtitle": "// AUTOMATION TOOL",
+            "hero.title": "FlowForge Automator<br>Batch Video & Image Generator",
+            "hero.tag.auto": "AUTOMATED",
+            "hero.tag.batch": "BATCH MODE",
+            "hero.tag.upscale": "4K UPSCALE",
+            "hero.badge.extension": "Chrome Extension",
+            "hero.badge.slots": "5 Concurrent Slots",
+            "hero.desc": "FlowForge Automator helps you generate hundreds of videos & images on Google Flow/Veo3 with just 1 click. Fully automate your creative workflow.",
+            "journey.tag": "// ACCELERATED JOURNEY",
+            "journey.title": "Why start with FlowForge today?",
+            "journey.free": "#Experience",
+            "journey.trial": "#Acceleration",
+            "journey.lifetime": "#Unlimited",
+            "journey.save": "● ● ● Save 90% of your working time",
+            "journey.intro.text": "<span class='link-free'>FREE</span> lets you <strong>experience</strong> the tool → <span class='link-trial'>TRIAL</span> helps you <strong>accelerate</strong> production → <span class='link-lifetime'>LIFETIME</span> gives you <strong>unlimited power</strong>, no limits.",
+            "journey.intro.free": "FREE",
+            "journey.intro.trial": "TRIAL",
+            "journey.intro.lifetime": "LIFETIME",
+            "journey.intro.warning": "Missing 1 step = you still waste time doing it manually.",
+            "journey.node.free.title": "Experience",
+            "journey.node.free.status": "Active now",
+            "journey.node.free.tag1": "+5 runs/day",
+            "journey.node.free.tag2": "+Free",
+            "journey.node.trial.title": "Accelerate",
+            "journey.node.trial.status": "$5 · 7 days",
+            "journey.node.trial.tag1": "+20 runs",
+            "journey.node.trial.tag2": "+Batch",
+            "journey.node.lifetime.title": "Unlimited",
+            "journey.node.lifetime.status": "$10 · Lifetime",
+            "journey.node.lifetime.tag1": "+Unlimited",
+            "journey.node.lifetime.tag2": "+VIP",
+            "journey.bundle": "Save 90% of your working time",
+            "features.tag": "// CORE FEATURES",
+            "features.title": "All-in-One Tool for Creators",
+            "features.video.list1": "<strong>Text-to-Video:</strong> Generate videos from text, supports 720p/1080p.",
+            "features.video.list2": "<strong>Ingredients Mode:</strong> Upload style/character reference images.",
+            "features.video.list3": "<strong>Start/End Frame:</strong> Control the starting/ending frame of the video.",
+            "features.video.list4": "<strong>Auto Download:</strong> Automatically download when finished.",
+            "features.image.list1": "<strong>Text-to-Image:</strong> Create high-quality images.",
+            "features.image.list2": "<strong>Auto Upscale:</strong> Auto upscale to 2K, 4K.",
+            "features.image.list3": "<strong>Image-to-Image:</strong> Use source image to guide style.",
+            "features.image.list4": "<strong>Preview Panel:</strong> Preview images in full aspect ratio.",
+            "comp.bad.title": "// CURRENT PROBLEMS",
+            "comp.bad.1": "Wasting hours clicking to create videos manually",
+            "comp.bad.2": "Watching continuously to download videos",
+            "comp.bad.3": "Cannot run multiple prompts at once",
+            "comp.bad.4": "Lost prompts if browser tab closed accidentally",
+            "comp.good.title": "// AFTER USING FLOWFORGE",
+            "comp.good.1": "1 Click to run hundreds of prompts automatically",
+            "comp.good.2": "Smart auto-download and file naming",
+            "comp.good.3": "Run 5 slots simultaneously (Batch Mode)",
+            "comp.good.4": "Auto retry and prompt saving",
+            "section.numbered": "// FEATURE DETAILS",
+            "numbered.title": "Why 1,000+ creators choose FlowForge?",
+            "numbered.1.title": "High-Speed Batch Mode",
+            "numbered.1.desc": "Run 5 generation slots at once. Auto-refill queue when slot is empty. 10x speed increase.",
+            "numbered.2.title": "Smart Download",
+            "numbered.2.desc": "No need to watch downloads. Extension saves to folder, naming files by ID and prompt for easy management.",
+            "numbered.3.title": "Auto Retry & Anti-Ban",
+            "numbered.3.desc": "Network error? System auto-retries. Smart anti-ban delay protects your Google account.",
+            "numbered.4.title": "Prompt Management",
+            "numbered.4.desc": "Save and manage prompts inside extension. Import/Export prompts easily via CSV/JSON.",
+            "section.benefits": "// VALUES",
+            "benefits.title": "What do you get?",
+            "benefits.1.title": "1-Click Install",
+            "benefits.1.desc": "Chrome Extension is easy to install, no complex setup.",
+            "benefits.2.title": "10x Speed",
+            "benefits.2.desc": "Increase productivity 10x compared to manual work.",
+            "benefits.3.title": "Safe & Secure",
+            "benefits.3.desc": "All data processed locally on your browser.",
+            "benefits.4.title": "Auto Update",
+            "benefits.4.desc": "Automatically update latest features for free.",
+            "benefits.5.title": "24/7 Support",
+            "benefits.5.desc": "Dedicated support for VIP members via Zalo/Discord.",
+            "benefits.6.title": "Original Quality",
+            "benefits.6.desc": "Download original quality video/images, no watermarks.",
+            "section.pricing": "// PRICING",
+            "pricing.title": "Start for free, upgrade when needed",
+            "pricing.free.tier": "Free (Bonus)",
+            "pricing.free.period": "/7 days",
+            "pricing.free.feat1": "🎁 Gift: 7-day Trial Package",
+            "pricing.free.feat2": "5 runs/day",
+            "pricing.free.feat3": "Max 5 prompts/batch",
+            "pricing.free.feat4": "Experience full features",
+            "pricing.button.free": "Download Free",
+            "pricing.trial.period": "One-time",
+            "pricing.trial.feat1": "20 runs/day",
+            "pricing.trial.feat2": "Max 20 prompts/batch",
+            "pricing.trial.feat3": "Multi-PC Support",
+            "pricing.button.trial": "Buy Trial",
+            "pricing.lifetime.tag": "Most Popular",
+            "pricing.lifetime.period": "Lifetime",
+            "pricing.lifetime.feat1": "UNLIMITED Runs",
+            "pricing.lifetime.feat2": "Unlimited Prompts (999+)",
+            "pricing.lifetime.feat3": "VIP Support & Update",
+            "pricing.button.lifetime": "Buy Lifetime",
+            "download.title": "Time to upgrade your workflow",
+            "download.desc": "Join 1,000+ creators using FlowForge every day.",
+            "download.button": "Download Extension Now",
+            "footer.rights": "&copy; 2026 FlowForge Automator. All rights reserved.",
+            "footer.support": "Support: tungpm.tvhs@gmail.com"
+        }
+    };
+
+    let currentLang = 'vi';
+
+    function detectUserLanguage() {
+        // 1. Check saved preference
+        const savedLang = localStorage.getItem('flowforge_lang');
+        if (savedLang) {
+            changeLanguage(savedLang);
+            return;
+        }
+
+        // 2. Check IP Location
+        fetch('https://ipapi.co/json/')
+            .then(res => res.json())
+            .then(data => {
+                // If country is VN, use 'vi', else 'en'
+                if (data.country_code === 'VN') {
+                    changeLanguage('vi');
+                } else {
+                    changeLanguage('en');
+                }
+            })
+            .catch(err => {
+                console.log('IP Detection failed, falling back to browser language:', err);
+                // 3. Fallback to Browser Language
+                const browserLang = navigator.language || navigator.userLanguage;
+                if (browserLang.startsWith('vi')) {
+                    changeLanguage('vi');
+                } else {
+                    changeLanguage('en');
+                }
+            });
+    }
+
+    function changeLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('flowforge_lang', lang);
+
+        // Update Text
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (translations[lang] && translations[lang][key]) {
+                el.innerHTML = translations[lang][key]; // Use innerHTML to support <br>
+            }
+        });
+
+        // Update Toggle Button
+        const btn = document.getElementById('lang-toggle');
+        if (btn) btn.textContent = lang === 'vi' ? 'VN' : 'EN';
+    }
+
+    function toggleLanguage() {
+        const newLang = currentLang === 'vi' ? 'en' : 'vi';
+        changeLanguage(newLang);
+    }
+
+    // Initialize
+    detectUserLanguage();
+
+    // Sticky Header & Scroll Spy
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('header-scrolled');
+        } else {
+            header.classList.remove('header-scrolled');
+        }
+
+        // Scroll Spy
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const dotLinks = document.querySelectorAll('.scroll-dot');
+
+        let currentSection = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= (sectionTop - 200)) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href === '#' + currentSection || (currentSection === '' && href === '#hero')) {
+                link.classList.add('active');
+            }
+        });
+
+        dotLinks.forEach(link => {
+            link.classList.remove('active');
+            const href = link.getAttribute('href');
+            if (href === '#' + currentSection || (currentSection === '' && href === '#hero')) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+
+</body>
+
+</html>
