@@ -11,6 +11,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='10' fill='%23161616' stroke='%23262626' stroke-width='1'/><path d='M14 12H28V15L19 15V19H26V22H19V28H15V12Z' fill='%23f5a623'/><rect x='21' y='22' width='9' height='3' rx='1.5' fill='%2322d3ee'/></svg>">
     <style>
         :root {
             /* Theme Colors - aiskill26 inspired */
@@ -198,8 +200,34 @@
             opacity: 0;
             pointer-events: none;
             transition: 0.3s;
-            white-space: nowrap;
+        }
+
+        /* --- Branding --- */
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .site-logo {
+            transition: transform 0.3s ease;
+        }
+
+        .logo-wrapper:hover .site-logo {
+            transform: scale(1.1);
+        }
+
+        .breadcrumb {
             font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .breadcrumb span {
+            color: var(--primary);
         }
 
         .scroll-dot:hover::after {
@@ -1147,9 +1175,28 @@
         <!-- Header -->
         <header>
             <div class="container header-inner">
-                <div class="breadcrumb">
-                    FlowForge / <span>Auto-Bot</span>
-                </div>
+                <a href="#hero" class="logo-wrapper">
+                    <svg class="site-logo" width="36" height="36" viewBox="0 0 40 40" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#f5a623" />
+                                <stop offset="100%" stop-color="#ff7b00" />
+                            </linearGradient>
+                            <filter id="logo-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                <feGaussianBlur stdDeviation="2" result="blur" />
+                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                            </filter>
+                        </defs>
+                        <rect width="40" height="40" rx="10" fill="#161616" stroke="#262626" stroke-width="1" />
+                        <path d="M14 12H28V15L19 15V19H26V22H19V28H15V12Z" fill="url(#logo-grad)"
+                            filter="url(#logo-glow)" />
+                        <rect x="21" y="22" width="9" height="3" rx="1.5" fill="#22d3ee" />
+                    </svg>
+                    <div class="breadcrumb">
+                        FlowForge / <span>Auto-Bot</span>
+                    </div>
+                </a>
 
                 <nav class="nav-links">
                     <a href="#hero" class="active" data-i18n="nav.home">Home</a>
