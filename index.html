@@ -163,6 +163,13 @@
             box-shadow: 0 0 10px var(--primary);
         }
 
+        /* Header Actions (Lang + Download) */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
         /* --- Right Scroll Nav --- */
         .right-scroll-nav {
             position: fixed;
@@ -1170,10 +1177,22 @@
 
         @media (max-width: 768px) {
 
-            /* Header Mobile */
-            header {
+            /* Notification Bar Mobile */
+            .notification-bar {
+                font-size: 0.7rem;
+                padding: 0 0.5rem;
                 height: auto;
-                padding: 1rem 0;
+                min-height: 36px;
+            }
+
+            /* Header Mobile */
+            header,
+            header.header-scrolled {
+                height: auto !important;
+                padding: 1rem;
+                background: #0d0d0d !important;
+                /* Solid dark background */
+                backdrop-filter: none !important;
             }
 
             .header-inner {
@@ -1182,10 +1201,16 @@
             }
 
             .nav-links {
+                position: static;
+                /* RESET ABSOLUTE POSITIONING */
+                transform: none;
+                left: auto;
+
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 0.8rem;
+                gap: 0.5rem;
+                /* Reduced gap to prevent wrapping */
                 width: 100%;
                 margin: 0.5rem 0;
             }
@@ -1199,10 +1224,17 @@
                 width: 100%;
             }
 
+            /* Header Actions (Lang + Download) */
+            .header-actions {
+                position: static !important;
+                width: 100%;
+                justify-content: center;
+            }
+
             /* Hero Mobile */
             .hero {
-                padding-top: 160px;
-                /* Space for taller header */
+                padding-top: 240px;
+                /* Increased for 3-row stacked header */
                 text-align: center;
                 min-height: auto;
                 padding-bottom: 4rem;
@@ -1376,7 +1408,7 @@
                     <a href="guide.html" data-i18n="nav.guide">Guide</a>
                 </nav>
 
-                <div style="display: flex; align-items: center; gap: 1rem;">
+                <div class="header-actions">
                     <button id="lang-toggle" onclick="toggleLanguage()" class="lang-btn"
                         style="margin-right: 0;">VN</button>
                     <a href="https://aiwithmt.gumroad.com/l/flowforge-free" target="_blank" class="btn-cta-small"
