@@ -318,6 +318,32 @@
                 flex-direction: column;
             }
 
+            /* Header Mobile */
+            header {
+                height: auto;
+                padding: 0.5rem 1rem;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .nav-controls {
+                width: 100%;
+                justify-content: space-between;
+                font-size: 0.85rem;
+            }
+
+            .logo-wrapper {
+                font-size: 1.1rem;
+            }
+
+            .lang-switch {
+                font-size: 0.75rem;
+            }
+
+            /* Sidebar Mobile */
             .sidebar {
                 width: 100%;
                 height: auto;
@@ -332,27 +358,53 @@
                 display: flex;
                 flex-wrap: wrap;
                 gap: 0.5rem;
+                justify-content: flex-start;
+                /* Align left */
             }
 
             .sidebar-link {
                 background: var(--bg-card);
                 border: 1px solid var(--border-color);
                 border-left: 1px solid var(--border-color);
-                /* reset */
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+                white-space: nowrap;
+                /* Prevent breaking inside button */
             }
 
             .sidebar-heading {
                 width: 100%;
-                margin: 1rem 0 0.5rem;
+                margin: 0.5rem 0 0.2rem;
+                flex-basis: 100%;
+                /* Force new line */
             }
 
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
             }
 
             .content-area {
                 padding: 1.5rem;
             }
+        }
+
+        /* Table Scroll Wrapper */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .table-responsive table {
+            margin: 0;
+            /* Remove margin from table inside wrapper */
+            border: none;
+            border-radius: 0;
+            min-width: 600px;
+            /* Force min width to trigger scroll */
         }
     </style>
 </head>
@@ -661,42 +713,44 @@
 
                     <h3>Cách tính Credit (Quota):</h3>
                     <p>Để đảm bảo công bằng và hiệu quả, hệ thống tính phí quota như sau:</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Chức năng</th>
-                                <th>Chế độ (Mode)</th>
-                                <th>Chi phí (Cost)</th>
-                                <th>Ghi chú</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Video</td>
-                                <td>Sequential</td>
-                                <td><strong>-1 credit</strong></td>
-                                <td>Chạy từng cái một.</td>
-                            </tr>
-                            <tr>
-                                <td>Video</td>
-                                <td>Batch</td>
-                                <td><strong>-2 credits</strong></td>
-                                <td>Chạy nhiều prompts cùng lúc (Khuyên dùng).</td>
-                            </tr>
-                            <tr>
-                                <td>Image</td>
-                                <td>Sequential</td>
-                                <td><strong>-1 credit</strong></td>
-                                <td>Chạy từng cái một.</td>
-                            </tr>
-                            <tr>
-                                <td>Image</td>
-                                <td>Batch</td>
-                                <td><strong>-1 credit</strong></td>
-                                <td>Chạy nhiều prompts cùng lúc (Khuyên dùng).</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Chức năng</th>
+                                    <th>Chế độ (Mode)</th>
+                                    <th>Chi phí (Cost)</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Video</td>
+                                    <td>Sequential</td>
+                                    <td><strong>-1 credit</strong></td>
+                                    <td>Chạy từng cái một.</td>
+                                </tr>
+                                <tr>
+                                    <td>Video</td>
+                                    <td>Batch</td>
+                                    <td><strong>-2 credits</strong></td>
+                                    <td>Chạy nhiều prompts cùng lúc (Khuyên dùng).</td>
+                                </tr>
+                                <tr>
+                                    <td>Image</td>
+                                    <td>Sequential</td>
+                                    <td><strong>-1 credit</strong></td>
+                                    <td>Chạy từng cái một.</td>
+                                </tr>
+                                <tr>
+                                    <td>Image</td>
+                                    <td>Batch</td>
+                                    <td><strong>-1 credit</strong></td>
+                                    <td>Chạy nhiều prompts cùng lúc (Khuyên dùng).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <p><em>(Rê chuột vào thanh "Video" hoặc "Image" trên tool để xem cách tính quota bất cứ lúc
                             nào)</em></p>
                     <p><strong>Credits</strong> ở đây là số lượt chạy (có thể chạy 1 prompt hoặc nhiều prompts trong
@@ -983,42 +1037,44 @@
 
                     <h3>Credit (Quota) Calculation:</h3>
                     <p>To ensure fairness and efficiency, the quota system works as follows:</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>Mode</th>
-                                <th>Cost</th>
-                                <th>Note</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Video</td>
-                                <td>Sequential</td>
-                                <td><strong>-1 credit</strong></td>
-                                <td>Runs one at a time.</td>
-                            </tr>
-                            <tr>
-                                <td>Video</td>
-                                <td>Batch</td>
-                                <td><strong>-2 credits</strong></td>
-                                <td>Runs multiple prompts at once (Recommended).</td>
-                            </tr>
-                            <tr>
-                                <td>Image</td>
-                                <td>Sequential</td>
-                                <td><strong>-1 credit</strong></td>
-                                <td>Runs one at a time.</td>
-                            </tr>
-                            <tr>
-                                <td>Image</td>
-                                <td>Batch</td>
-                                <td><strong>-1 credit</strong></td>
-                                <td>Runs multiple prompts at once (Recommended).</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Mode</th>
+                                    <th>Cost</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Video</td>
+                                    <td>Sequential</td>
+                                    <td><strong>-1 credit</strong></td>
+                                    <td>Runs one at a time.</td>
+                                </tr>
+                                <tr>
+                                    <td>Video</td>
+                                    <td>Batch</td>
+                                    <td><strong>-2 credits</strong></td>
+                                    <td>Runs multiple prompts at once (Recommended).</td>
+                                </tr>
+                                <tr>
+                                    <td>Image</td>
+                                    <td>Sequential</td>
+                                    <td><strong>-1 credit</strong></td>
+                                    <td>Runs one at a time.</td>
+                                </tr>
+                                <tr>
+                                    <td>Image</td>
+                                    <td>Batch</td>
+                                    <td><strong>-1 credit</strong></td>
+                                    <td>Runs multiple prompts at once (Recommended).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <p><em>(Hover over the "Video" or "Image" bar on the tool to see quota calculation anytime)</em>
                     </p>
                     <p><strong>Credits</strong> are the number of runs (can run 1 or multiple prompts per run).</p>
