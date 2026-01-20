@@ -1179,10 +1179,12 @@
 
             /* Notification Bar Mobile */
             .notification-bar {
-                font-size: 0.7rem;
-                padding: 0 0.5rem;
+                font-size: 0.65rem;
+                /* Even smaller for mobile */
+                padding: 0.3rem 0.5rem;
                 height: auto;
-                min-height: 36px;
+                min-height: 30px;
+                line-height: 1.3;
             }
 
             /* Header Mobile */
@@ -1208,16 +1210,16 @@
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 0.4rem 0.6rem;
-                /* row-gap column-gap - tighter */
+                gap: 0.3rem 0.5rem;
+                /* Tighter gaps */
                 width: 100%;
-                margin: 0.3rem 0;
+                margin: 0.2rem 0;
             }
 
             .nav-links a {
-                font-size: 0.75rem;
-                /* Smaller font for mobile */
-                padding: 0.2rem 0;
+                font-size: 0.7rem;
+                /* Smaller font */
+                padding: 0.15rem 0;
             }
 
             .logo-wrapper {
@@ -1225,11 +1227,26 @@
                 width: 100%;
             }
 
-            /* Header Actions (Lang + Download) */
+            /* Header Actions (Lang + Download) - positioned at corners */
             .header-actions {
                 position: static !important;
                 width: 100%;
-                justify-content: center;
+                display: flex;
+                justify-content: space-between;
+                /* Left and right corners */
+                align-items: center;
+                padding: 0 0.5rem;
+            }
+
+            .header-actions .lang-btn {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.5rem;
+                margin-right: 0;
+            }
+
+            .header-actions .btn-cta-small {
+                font-size: 0.7rem;
+                padding: 0.4rem 0.8rem;
             }
 
             /* Hero Mobile */
