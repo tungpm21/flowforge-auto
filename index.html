@@ -21,6 +21,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='10' fill='%23161616' stroke='%23262626' stroke-width='1'/><path d='M14 12H28V15L19 15V19H26V22H19V28H15V12Z' fill='%23f5a623'/><rect x='21' y='22' width='9' height='3' rx='1.5' fill='%2322d3ee'/></svg>">
     <style>
@@ -45,6 +47,81 @@
 
             /* Spacing */
             --container-width: 1000px;
+        }
+
+        /* --- Ambient Background --- */
+        .ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            background: #0d0d0d;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: floatBlob 20s infinite alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(245, 166, 35, 0.3);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(34, 211, 238, 0.3);
+            animation-delay: -5s;
+        }
+
+        .blob-3 {
+            bottom: 30%;
+            left: 20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(168, 85, 247, 0.25);
+            animation-delay: -10s;
+        }
+
+        @keyframes floatBlob {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(50px, 50px) scale(1.1);
+            }
+        }
+
+        /* --- Glassmorphism Pro --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: all 0.4s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         * {
@@ -1408,6 +1485,13 @@
 
 <body>
 
+    <!-- Ambient Background -->
+    <div class="ambient-canvas">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
     <!-- Notification Bar -->
     <!-- Notification Bar -->
     <div class="notification-bar">
@@ -1640,7 +1724,7 @@
 
             <div class="features-cols">
                 <!-- Video Tab -->
-                <div class="feature-col-card">
+                <div class="feature-col-card glass-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="card-title">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--secondary)">
                             <path d="M10 8l6 4-6 4V8z" />
@@ -1666,7 +1750,7 @@
                 </div>
 
                 <!-- Image Tab -->
-                <div class="feature-col-card">
+                <div class="feature-col-card glass-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="card-title">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--primary)">
                             <rect x="3" y="3" width="18" height="18" rx="2" stroke="var(--primary)" fill="none"
@@ -1695,7 +1779,7 @@
                     </ul>
                 </div>
                 <!-- Comparison Bad -->
-                <div class="comp-card comp-bad">
+                <div class="comp-card comp-bad glass-card" data-aos="flip-up" data-aos-delay="300">
                     <span class="comp-header" data-i18n="comp.bad.title">// VẤN ĐỀ HIỆN TẠI</span>
                     <ul class="comp-list" style="list-style: none; padding: 0;">
                         <li data-i18n="comp.bad.1">Mất hàng giờ để click tạo từng video thủ công</li>
@@ -1706,7 +1790,7 @@
                 </div>
 
                 <!-- Comparison Good -->
-                <div class="comp-card comp-good">
+                <div class="comp-card comp-good glass-card" data-aos="flip-up" data-aos-delay="400">
                     <span class="comp-header" data-i18n="comp.good.title">// SAU KHI DÙNG FLOWFORGE</span>
                     <ul class="comp-list" style="list-style: none; padding: 0;">
                         <li data-i18n="comp.good.1">1 Click chạy hàng trăm prompts tự động</li>
@@ -1726,7 +1810,7 @@
             <h2 data-i18n="numbered.title">Tại sao 1,000+ creators chọn FlowForge?</h2>
 
             <div class="numbered-grid">
-                <div class="num-item">
+                <div class="num-item glass-card" data-aos="fade-right" data-aos-delay="100">
                     <div class="num-badge">01</div>
                     <div class="num-content">
                         <h4 data-i18n="numbered.1.title">Batch Mode Tốc Độ Cao</h4>
@@ -1736,7 +1820,7 @@
                     </div>
                 </div>
 
-                <div class="num-item">
+                <div class="num-item glass-card" data-aos="fade-right" data-aos-delay="200">
                     <div class="num-badge">02</div>
                     <div class="num-content">
                         <h4 data-i18n="numbered.2.title">Smart Download</h4>
@@ -1746,7 +1830,7 @@
                     </div>
                 </div>
 
-                <div class="num-item">
+                <div class="num-item glass-card" data-aos="fade-right" data-aos-delay="300">
                     <div class="num-badge">03</div>
                     <div class="num-content">
                         <h4 data-i18n="numbered.3.title">Auto Retry & Anti-Ban</h4>
@@ -1756,7 +1840,7 @@
                     </div>
                 </div>
 
-                <div class="num-item">
+                <div class="num-item glass-card" data-aos="fade-right" data-aos-delay="400">
                     <div class="num-badge">04</div>
                     <div class="num-content">
                         <h4 data-i18n="numbered.4.title">Prompt Management</h4>
@@ -1775,32 +1859,32 @@
             <h2 data-i18n="benefits.title">Bạn nhận được gì?</h2>
 
             <div class="bnf-grid">
-                <div class="bnf-card">
+                <div class="bnf-card glass-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="bnf-icon">🚀</div>
                     <h4 data-i18n="benefits.1.title">Cài đặt 1 click</h4>
                     <p data-i18n="benefits.1.desc">Chrome Extension cài đặt dễ dàng, không cần setup phức tạp.</p>
                 </div>
-                <div class="bnf-card">
+                <div class="bnf-card glass-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="bnf-icon">⚡</div>
                     <h4 data-i18n="benefits.2.title">Tốc độ x10</h4>
                     <p data-i18n="benefits.2.desc">Tăng năng suất làm việc gấp 10 lần so với làm thủ công.</p>
                 </div>
-                <div class="bnf-card">
+                <div class="bnf-card glass-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="bnf-icon">🔒</div>
                     <h4 data-i18n="benefits.3.title">An toàn & Bảo mật</h4>
                     <p data-i18n="benefits.3.desc">Mọi data được xử lý local trên trình duyệt của bạn.</p>
                 </div>
-                <div class="bnf-card">
+                <div class="bnf-card glass-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="bnf-icon">🔄</div>
                     <h4 data-i18n="benefits.4.title">Auto Update</h4>
                     <p data-i18n="benefits.4.desc">Tự động cập nhật tính năng mới nhất miễn phí.</p>
                 </div>
-                <div class="bnf-card">
+                <div class="bnf-card glass-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="bnf-icon">🎁</div>
                     <h4 data-i18n="benefits.5.title">Hỗ trợ 24/7</h4>
                     <p data-i18n="benefits.5.desc">Nhóm hỗ trợ riêng cho thành viên VIP qua Telegram/Discord.</p>
                 </div>
-                <div class="bnf-card">
+                <div class="bnf-card glass-card" data-aos="fade-up" data-aos-delay="600">
                     <div class="bnf-icon">💎</div>
                     <h4 data-i18n="benefits.6.title">Chất lượng gốc</h4>
                     <p data-i18n="benefits.6.desc">Download video/ảnh chất lượng gốc, tùy chỉnh đặt tên.</p>
@@ -1816,7 +1900,7 @@
 
             <div class="pricing-cols">
                 <!-- Free -->
-                <div class="price-card">
+                <div class="price-card glass-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="price-tier" data-i18n="pricing.free.tier">Free (Bonus)</div>
                     <div class="price-amount">$0</div>
                     <span class="price-sub" data-i18n="pricing.free.period">Trial 7 ngày</span>
@@ -1831,7 +1915,7 @@
                 </div>
 
                 <!-- Trial -->
-                <div class="price-card">
+                <div class="price-card glass-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="price-tier">Standard</div>
                     <div class="price-amount">$5</div>
                     <span class="price-sub" data-i18n="pricing.trial.period">Một lần</span>
@@ -1846,7 +1930,7 @@
                 </div>
 
                 <!-- Lifetime -->
-                <div class="price-card featured">
+                <div class="price-card featured glass-card" data-aos="zoom-in" data-aos-delay="300">
                     <span class="best-tag" data-i18n="pricing.lifetime.tag">Phổ biến nhất</span>
                     <div class="price-tier">Lifetime</div>
                     <div class="price-amount">$10</div>
@@ -2225,6 +2309,17 @@
                 link.classList.add('active');
             }
         });
+    });
+</script>
+
+<!-- AOS Animation Library -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 50,
+        easing: 'ease-out-cubic'
     });
 </script>
 
