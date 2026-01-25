@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog - FlowForge Automator</title>
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KT6DJRLQ9V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-KT6DJRLQ9V');
+    </script>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='10' fill='%23161616' stroke='%23262626' stroke-width='1'/><path d='M14 12H28V15L19 15V19H26V22H19V28H15V12Z' fill='%23f5a623'/><rect x='21' y='22' width='9' height='3' rx='1.5' fill='%2322d3ee'/></svg>">
+
+    <style>
+        :root {
+            --bg-dark: #0d0d0d;
+            --primary: #f5a623;
+            --secondary: #22d3ee;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --border-color: #262626;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background */
+        .ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            background: #0d0d0d;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: floatBlob 20s infinite alternate;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(245, 166, 35, 0.2);
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(34, 211, 238, 0.2);
+            animation-delay: -5s;
+        }
+
+        @keyframes floatBlob {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        header {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .home-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: 0.3s;
+        }
+
+        .home-link:hover {
+            color: var(--primary);
+        }
+
+        /* Content */
+        .page-title {
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Update Post */
+        .update-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .update-date {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .update-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .update-tags {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .tag-feat {
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--secondary);
+        }
+
+        .tag-fix {
+            background: rgba(245, 166, 35, 0.1);
+            color: var(--primary);
+        }
+
+        .tag-opt {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+        }
+
+        .update-body h3 {
+            font-size: 1.1rem;
+            color: #eaeaea;
+            margin: 1.5rem 0 0.5rem;
+        }
+
+        .update-body ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .update-body li {
+            margin-bottom: 0.5rem;
+            color: #ccc;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .update-body li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        .update-body strong {
+            color: #fff;
+        }
+
+        .instruction-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary);
+            margin-top: 1.5rem;
+        }
+
+        .instruction-box h4 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid #222;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ambient-canvas">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <a href="index.html" class="home-link">← Quay về Trang chủ</a>
+            <div style="font-family: 'JetBrains Mono'; font-weight: 700;">FLOWFORGE<span
+                    style="color: var(--secondary)">.LOG</span></div>
+        </header>
+
+        <section class="page-title" data-aos="fade-down">
+            <h1>Lịch sử Cập nhật</h1>
+            <p>Theo dõi các tính năng mới và bản vá lỗi của FlowForge Automator.</p>
+        </section>
+
+        <!-- Update 25/01/2026 -->
+        <article class="glass-card" data-aos="fade-up">
+            <div class="update-header">
+                <div>
+                    <span class="update-date">25/01/2026</span>
+                    <h2 class="update-title">Hỗ trợ 4K Upscale & Fix lỗi Download</h2>
+                </div>
+                <div class="update-tags">
+                    <span class="tag tag-feat">New Feature</span>
+                    <span class="tag tag-fix">Bug Fix</span>
+                </div>
+            </div>
+
+            <div class="update-body">
+                <p>Phiên bản cập nhật quan trọng tập trung vào chất lượng video 4K và sửa các lỗi tồn đọng giúp trải
+                    nghiệm mượt mà hơn.</p>
+
+                <h3>✨ Tính Năng Mới & Cải Tiến</h3>
+                <ul>
+                    <li><strong>Hỗ Trợ Tải Video 4K (Upscale):</strong> Thêm tùy chọn 4K vào menu. Tool tự động chọn
+                        "Upscale (4K)" và tăng timeout lên 10 phút để đảm bảo render hoàn tất.</li>
+                    <li><strong>Cập Nhật Tab Image:</strong> Tính năng Upscale ảnh (2K/4K) được cập nhật logic nhận diện
+                        mới, hoạt động ổn định hơn.</li>
+                </ul>
+
+                <h3>🛠️ Sửa Lỗi (Bug Fixes)</h3>
+                <ul>
+                    <li><strong>Fix Lỗi "Download All":</strong> Đã khắc phục việc Download All không hoạt động với
+                        video 4K. Giờ đây bạn có thể treo máy tải toàn bộ video chất lượng cao.</li>
+                    <li><strong>Fix Lỗi Menu chồng chéo:</strong> Sửa lỗi tool chọn nhầm "Upscale" khi người dùng chọn
+                        "1080p". Logic nhận diện giờ chính xác 100% cho 720p, 1080p và 4K.</li>
+                </ul>
+
+                <h3>⚙️ Thay Đổi Khác</h3>
+                <ul>
+                    <li>Giao diện: Loại bỏ tùy chọn GIF (270p) để tránh nhầm lẫn.</li>
+                    <li>Ổn định: Cải thiện khả năng kết nối lại (Auto-reconnect) khi mạng lag.</li>
+                </ul>
+
+                <div class="instruction-box">
+                    <h4>👉 Hướng dẫn cập nhật</h4>
+                    <ol style="margin-left: 1.5rem; color: #ccc;">
+                        <li>Tải bộ code mới nhất từ Gumroad/Email.</li>
+                        <li>Truy cập <code>chrome://extensions</code>.</li>
+                        <li>Bấm nút <strong>Reload</strong> ⟳ ở extension FlowForge.</li>
+                        <li>F5 lại trang Veo/Flow để nạp code mới.</li>
+                    </ol>
+                </div>
+            </div>
+        </article>
+
+    </div>
+
+    <footer>
+        &copy; 2026 FlowForge Automator. All rights reserved.
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init();</script>
+</body>
+
+</html>
