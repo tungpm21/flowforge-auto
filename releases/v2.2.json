@@ -1,0 +1,68 @@
+{
+  "version": "2.2",
+  "date": "2026-01-25",
+  "downloadUrl": "",
+  "downloadFileName": "",
+  "tags": ["feature", "bugfix"],
+  "title": {
+    "vi": "Ho tro 4K Upscale & Fix loi Download",
+    "en": "4K Upscale Support & Download Bug Fix"
+  },
+  "summary": {
+    "vi": "Phien ban cap nhat quan trong tap trung vao chat luong video 4K va sua cac loi ton dong giup trai nghiem muot ma hon.",
+    "en": "Important update focusing on 4K video quality and fixing remaining bugs for smoother experience."
+  },
+  "sections": [
+    {
+      "type": "feature",
+      "emoji": "✨",
+      "title": { "vi": "Tinh Nang Moi", "en": "New Features" },
+      "items": [
+        {
+          "class": "feat",
+          "vi": "<strong>Ho Tro Tai Video 4K (Upscale):</strong> Them tuy chon 4K vao menu. Tool tu dong chon \"Upscale (4K)\" va tang timeout len 10 phut de dam bao render hoan tat.",
+          "en": "<strong>4K Video Download Support (Upscale):</strong> Added 4K option to menu. Tool automatically selects \"Upscale (4K)\" and increases timeout to 10 minutes to ensure render completion."
+        },
+        {
+          "class": "feat",
+          "vi": "<strong>Cap Nhat Tab Image:</strong> Tinh nang Upscale anh (2K/4K) duoc cap nhat logic nhan dien moi, hoat dong on dinh hon.",
+          "en": "<strong>Image Tab Update:</strong> Image Upscale feature (2K/4K) updated with new detection logic, more stable operation."
+        }
+      ]
+    },
+    {
+      "type": "bugfix",
+      "emoji": "🐛",
+      "title": { "vi": "Sua Loi", "en": "Bug Fixes" },
+      "items": [
+        {
+          "class": "fix",
+          "vi": "<strong>Fix Loi \"Download All\":</strong> Da khac phuc viec Download All khong hoat dong voi video 4K. Gio day ban co the treo may tai toan bo video chat luong cao.",
+          "en": "<strong>Fix \"Download All\" Bug:</strong> Fixed Download All not working with 4K videos. Now you can batch download all high-quality videos."
+        },
+        {
+          "class": "fix",
+          "vi": "<strong>Fix Loi Menu chong cheo:</strong> Sua loi tool chon nham \"Upscale\" khi nguoi dung chon \"1080p\". Logic nhan dien gio chinh xac 100% cho 720p, 1080p va 4K.",
+          "en": "<strong>Fix Menu Overlap Bug:</strong> Fixed tool selecting wrong \"Upscale\" when user chose \"1080p\". Detection logic now 100% accurate for 720p, 1080p and 4K."
+        }
+      ]
+    },
+    {
+      "type": "other",
+      "emoji": "⚙️",
+      "title": { "vi": "Thay Doi Khac", "en": "Other Changes" },
+      "items": [
+        {
+          "class": "",
+          "vi": "Giao dien: Loai bo tuy chon GIF (270p) de tranh nham lan.",
+          "en": "UI: Removed GIF (270p) option to avoid confusion."
+        },
+        {
+          "class": "",
+          "vi": "On dinh: Cai thien kha nang ket noi lai (Auto-reconnect) khi mang lag.",
+          "en": "Stability: Improved auto-reconnect capability when network lags."
+        }
+      ]
+    }
+  ]
+}

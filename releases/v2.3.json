@@ -1,0 +1,103 @@
+{
+  "version": "2.3",
+  "date": "2026-01-27",
+  "downloadUrl": "https://drive.google.com/uc?export=download&id=1nxsXmvEhv1_nyp8HrLvVvEZhxJdQfkEY",
+  "downloadFileName": "FlowForge_2501.zip",
+  "tags": ["bugfix", "critical", "improvement"],
+  "title": {
+    "vi": "Sua Loi Image Tab & Loi Duplicate Injection",
+    "en": "Fix Image Tab & Duplicate Injection Error"
+  },
+  "summary": {
+    "vi": "Ban cap nhat quan trong sua cac loi nghiem trong o Image Tab va loi duplicate script injection gay crash extension.",
+    "en": "Critical update fixing serious bugs in Image Tab and duplicate script injection that caused extension crash."
+  },
+  "sections": [
+    {
+      "type": "bugfix",
+      "emoji": "🐛",
+      "title": { "vi": "Sua Loi", "en": "Bug Fixes" },
+      "items": [
+        {
+          "class": "fix",
+          "vi": "<strong>Fix che do \"Create Only\" (Image Tab):</strong> Sua loi che do Create Only khong hoat dong. Nguyen nhan do message <code>IMG_START_BATCH_CREATE_ONLY</code> khong duoc xu ly dung trong content script.",
+          "en": "<strong>Fix \"Create Only\" Mode (Image Tab):</strong> Fixed Create Only mode not working. Root cause was message <code>IMG_START_BATCH_CREATE_ONLY</code> not being handled correctly in content script."
+        },
+        {
+          "class": "fix",
+          "vi": "<strong>Fix Loi Duplicate Injection:</strong> Sua loi <code>ImageBatchManager has already been declared</code> xay ra khi sidepanel inject scripts lan 2. Them marker check de tranh duplicate.",
+          "en": "<strong>Fix Duplicate Injection Error:</strong> Fixed <code>ImageBatchManager has already been declared</code> error when sidepanel injects scripts twice. Added marker check to prevent duplicate."
+        },
+        {
+          "class": "fix",
+          "vi": "<strong>Fix Nut Reuse (Static Mode):</strong> Sua loi che do Static (Image Tab) click nham vao thumbnail thay vi nut \"Reuse prompt\". Viet lai logic tim nut bang XPath va text matching.",
+          "en": "<strong>Fix Static Mode Reuse Button:</strong> Fixed Static mode (Image Tab) clicking wrong element (thumbnail instead of \"Reuse prompt\" button). Rewrote button detection using XPath and text matching."
+        },
+        {
+          "class": "fix",
+          "vi": "<strong>Fix PING Handler:</strong> Them <code>return true</code> cho PING handler trong <code>image_sequential.js</code> de giu message channel mo.",
+          "en": "<strong>Fix PING Handler:</strong> Added <code>return true</code> to PING handler in <code>image_sequential.js</code> to keep message channel open."
+        }
+      ]
+    },
+    {
+      "type": "improvement",
+      "emoji": "🔧",
+      "title": { "vi": "Cai Tien", "en": "Improvements" },
+      "items": [
+        {
+          "class": "improve",
+          "vi": "<strong>Smart Script Injection:</strong> Kiem tra marker <code>__FLOWFORGE_LOADED__</code> truoc khi inject de tranh chay code 2 lan.",
+          "en": "<strong>Smart Script Injection:</strong> Check marker <code>__FLOWFORGE_LOADED__</code> before injection to avoid running code twice."
+        },
+        {
+          "class": "improve",
+          "vi": "<strong>Thong Bao Loi Tot Hon:</strong> Them log chi tiet hon khi ket noi that bai, huong dan user reload page.",
+          "en": "<strong>Better Error Messages:</strong> Added more detailed logs when connection fails, guiding user to reload page."
+        },
+        {
+          "class": "improve",
+          "vi": "<strong>Fallback Upload:</strong> Neu Reuse button khong hoat dong, tu dong re-upload tat ca reference images.",
+          "en": "<strong>Fallback Upload:</strong> If Reuse button fails, automatically re-upload all reference images."
+        }
+      ]
+    },
+    {
+      "type": "files",
+      "emoji": "📁",
+      "title": { "vi": "Files Da Thay Doi", "en": "Files Changed" },
+      "items": [
+        {
+          "class": "",
+          "vi": "<code>src/content_main.js</code> - Them marker, fix message handler",
+          "en": "<code>src/content_main.js</code> - Added marker, fixed message handler"
+        },
+        {
+          "class": "",
+          "vi": "<code>src/logic/image_sequential.js</code> - Them handler cho IMG_START_BATCH_CREATE_ONLY",
+          "en": "<code>src/logic/image_sequential.js</code> - Added handler for IMG_START_BATCH_CREATE_ONLY"
+        },
+        {
+          "class": "",
+          "vi": "<code>src/logic/image_uploader.js</code> - Viet lai tryReuseStaticImages()",
+          "en": "<code>src/logic/image_uploader.js</code> - Rewrote tryReuseStaticImages()"
+        },
+        {
+          "class": "",
+          "vi": "<code>src/logic/image_batch.js</code> - Them fallback khi reuse fail",
+          "en": "<code>src/logic/image_batch.js</code> - Added fallback when reuse fails"
+        },
+        {
+          "class": "",
+          "vi": "<code>src/sidepanel_video.js</code> - Smart injection voi marker check",
+          "en": "<code>src/sidepanel_video.js</code> - Smart injection with marker check"
+        },
+        {
+          "class": "",
+          "vi": "<code>src/sidepanel_image.js</code> - Smart injection, dung content_bundle.js",
+          "en": "<code>src/sidepanel_image.js</code> - Smart injection, use content_bundle.js"
+        }
+      ]
+    }
+  ]
+}

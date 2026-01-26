@@ -175,6 +175,27 @@
             font-size: 1rem;
         }
 
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 4rem 0;
+            color: var(--text-muted);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-color);
+            border-top-color: var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Timeline */
         .releases-timeline {
             position: relative;
@@ -546,177 +567,14 @@
             <p data-i18n="page.subtitle">Theo doi cac phien ban cap nhat cua FlowForge Automator</p>
         </section>
 
-        <div class="releases-timeline">
-
-            <!-- ===================== v2.3 - 27/01/2026 ===================== -->
-            <article class="release-card latest" data-aos="fade-up">
-                <div class="release-header">
-                    <div class="release-info">
-                        <div class="release-version">
-                            v2.3
-                            <span class="latest-badge" data-i18n="tag.latest">Latest</span>
-                        </div>
-                        <div class="release-date">
-                            <svg fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2z"/>
-                            </svg>
-                            27/01/2026
-                        </div>
-                        <h3 class="release-title" data-i18n="v23.title">Fix Image Tab & Duplicate Injection Error</h3>
-                        <div class="release-tags">
-                            <span class="tag tag-bugfix" data-i18n="tag.bugfix">Bug Fix</span>
-                            <span class="tag tag-critical" data-i18n="tag.critical">Critical</span>
-                            <span class="tag tag-improvement" data-i18n="tag.improvement">Improvement</span>
-                        </div>
-                    </div>
-                    <div class="download-section">
-                        <a href="https://drive.google.com/uc?export=download&id=YOUR_FILE_ID" class="download-btn" target="_blank">
-                            <svg fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                            </svg>
-                            <span data-i18n="btn.download">Download v2.3</span>
-                        </a>
-                        <span class="download-info">FlowForge_2501.zip</span>
-                    </div>
-                </div>
-
-                <div class="release-body">
-                    <p class="release-summary" data-i18n="v23.summary">
-                        Ban cap nhat quan trong sua cac loi nghiem trong o Image Tab va loi duplicate script injection gay crash extension.
-                    </p>
-
-                    <div class="changes-section">
-                        <h4><span class="emoji">🐛</span> <span data-i18n="section.bugfix">Bug Fixes</span></h4>
-                        <ul class="changes-list">
-                            <li class="fix" data-i18n="v23.fix1">
-                                <strong>Fix "Create Only" Mode (Image Tab):</strong> Sua loi che do Create Only khong hoat dong. 
-                                Nguyen nhan do message <code>IMG_START_BATCH_CREATE_ONLY</code> khong duoc xu ly dung trong content script.
-                            </li>
-                            <li class="fix" data-i18n="v23.fix2">
-                                <strong>Fix Duplicate Injection Error:</strong> Sua loi <code>ImageBatchManager has already been declared</code> 
-                                xay ra khi sidepanel inject scripts lan 2. Them marker check de tranh duplicate.
-                            </li>
-                            <li class="fix" data-i18n="v23.fix3">
-                                <strong>Fix Static Mode Reuse Button:</strong> Sua loi che do Static (Image Tab) click nham vao thumbnail 
-                                thay vi nut "Reuse prompt". Viet lai logic tim nut bang XPath va text matching.
-                            </li>
-                            <li class="fix" data-i18n="v23.fix4">
-                                <strong>Fix PING Handler:</strong> Them <code>return true</code> cho PING handler trong 
-                                <code>image_sequential.js</code> de giu message channel mo.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="changes-section">
-                        <h4><span class="emoji">🔧</span> <span data-i18n="section.improvement">Improvements</span></h4>
-                        <ul class="changes-list">
-                            <li class="improve" data-i18n="v23.imp1">
-                                <strong>Smart Script Injection:</strong> Kiem tra marker <code>__FLOWFORGE_LOADED__</code> truoc khi inject 
-                                de tranh chay code 2 lan.
-                            </li>
-                            <li class="improve" data-i18n="v23.imp2">
-                                <strong>Better Error Messages:</strong> Them log chi tiet hon khi ket noi that bai, huong dan user reload page.
-                            </li>
-                            <li class="improve" data-i18n="v23.imp3">
-                                <strong>Fallback Upload:</strong> Neu Reuse button khong hoat dong, tu dong re-upload tat ca reference images.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="changes-section">
-                        <h4><span class="emoji">📁</span> <span data-i18n="section.files">Files Changed</span></h4>
-                        <ul class="changes-list">
-                            <li><code>src/content_main.js</code> - <span data-i18n="v23.file1">Them marker, fix message handler</span></li>
-                            <li><code>src/logic/image_sequential.js</code> - <span data-i18n="v23.file2">Them handler cho IMG_START_BATCH_CREATE_ONLY</span></li>
-                            <li><code>src/logic/image_uploader.js</code> - <span data-i18n="v23.file3">Viet lai tryReuseStaticImages()</span></li>
-                            <li><code>src/logic/image_batch.js</code> - <span data-i18n="v23.file4">Them fallback khi reuse fail</span></li>
-                            <li><code>src/sidepanel_video.js</code> - <span data-i18n="v23.file5">Smart injection voi marker check</span></li>
-                            <li><code>src/sidepanel_image.js</code> - <span data-i18n="v23.file6">Smart injection, dung content_bundle.js</span></li>
-                        </ul>
-                    </div>
-
-                    <div class="update-instructions">
-                        <h5>
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                            </svg>
-                            <span data-i18n="section.howto">Huong dan cap nhat</span>
-                        </h5>
-                        <ol>
-                            <li data-i18n="howto.step1">Tai file zip moi tu nut Download o tren</li>
-                            <li data-i18n="howto.step2">Giai nen va thay the folder extension cu</li>
-                            <li data-i18n="howto.step3">Vao <code>chrome://extensions</code> va bam <strong>Reload</strong></li>
-                            <li data-i18n="howto.step4"><strong>Quan trong:</strong> Reload trang Flow (F5) de nap code moi</li>
-                        </ol>
-                    </div>
-                </div>
-            </article>
-
-            <!-- ===================== v2.2 - 25/01/2026 ===================== -->
-            <article class="release-card" data-aos="fade-up" data-aos-delay="100">
-                <div class="release-header">
-                    <div class="release-info">
-                        <div class="release-version">v2.2</div>
-                        <div class="release-date">
-                            <svg fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2z"/>
-                            </svg>
-                            25/01/2026
-                        </div>
-                        <h3 class="release-title" data-i18n="v22.title">Ho tro 4K Upscale & Fix loi Download</h3>
-                        <div class="release-tags">
-                            <span class="tag tag-feature" data-i18n="tag.feature">New Feature</span>
-                            <span class="tag tag-bugfix" data-i18n="tag.bugfix">Bug Fix</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="release-body">
-                    <p class="release-summary" data-i18n="v22.summary">
-                        Phien ban cap nhat quan trong tap trung vao chat luong video 4K va sua cac loi ton dong giup trai nghiem muot ma hon.
-                    </p>
-
-                    <div class="changes-section">
-                        <h4><span class="emoji">✨</span> <span data-i18n="section.feature">New Features</span></h4>
-                        <ul class="changes-list">
-                            <li class="feat" data-i18n="v22.feat1">
-                                <strong>Ho Tro Tai Video 4K (Upscale):</strong> Them tuy chon 4K vao menu. Tool tu dong chon 
-                                "Upscale (4K)" va tang timeout len 10 phut de dam bao render hoan tat.
-                            </li>
-                            <li class="feat" data-i18n="v22.feat2">
-                                <strong>Cap Nhat Tab Image:</strong> Tinh nang Upscale anh (2K/4K) duoc cap nhat logic nhan dien 
-                                moi, hoat dong on dinh hon.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="changes-section">
-                        <h4><span class="emoji">🐛</span> <span data-i18n="section.bugfix">Bug Fixes</span></h4>
-                        <ul class="changes-list">
-                            <li class="fix" data-i18n="v22.fix1">
-                                <strong>Fix Loi "Download All":</strong> Da khac phuc viec Download All khong hoat dong voi 
-                                video 4K. Gio day ban co the treo may tai toan bo video chat luong cao.
-                            </li>
-                            <li class="fix" data-i18n="v22.fix2">
-                                <strong>Fix Loi Menu chong cheo:</strong> Sua loi tool chon nham "Upscale" khi nguoi dung chon 
-                                "1080p". Logic nhan dien gio chinh xac 100% cho 720p, 1080p va 4K.
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="changes-section">
-                        <h4><span class="emoji">⚙️</span> <span data-i18n="section.other">Other Changes</span></h4>
-                        <ul class="changes-list">
-                            <li data-i18n="v22.other1">Giao dien: Loai bo tuy chon GIF (270p) de tranh nham lan.</li>
-                            <li data-i18n="v22.other2">On dinh: Cai thien kha nang ket noi lai (Auto-reconnect) khi mang lag.</li>
-                        </ul>
-                    </div>
-                </div>
-            </article>
-
+        <!-- Loading state -->
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading releases...</p>
         </div>
+
+        <!-- Releases will be rendered here -->
+        <div id="releases-container" class="releases-timeline" style="display: none;"></div>
     </div>
 
     <footer>
@@ -727,130 +585,46 @@
     <script>AOS.init({ duration: 600, once: true });</script>
 
     <script>
-        // ============== BILINGUAL TRANSLATIONS ==============
+        // ============== STATIC TRANSLATIONS (UI elements) ==============
         const translations = {
             vi: {
-                // Navigation
                 'nav.back': 'Quay ve Trang chu',
-                
-                // Page header
                 'page.title': 'Lich Su Cap Nhat',
                 'page.subtitle': 'Theo doi cac phien ban cap nhat cua FlowForge Automator',
-                
-                // Tags
                 'tag.latest': 'Moi nhat',
                 'tag.feature': 'Tinh nang moi',
                 'tag.bugfix': 'Sua loi',
                 'tag.improvement': 'Cai tien',
                 'tag.critical': 'Quan trong',
-                
-                // Sections
-                'section.feature': 'Tinh Nang Moi',
-                'section.bugfix': 'Sua Loi',
-                'section.improvement': 'Cai Tien',
-                'section.files': 'Files Da Thay Doi',
-                'section.other': 'Thay Doi Khac',
+                'btn.download': 'Tai',
                 'section.howto': 'Huong dan cap nhat',
-                
-                // Buttons
-                'btn.download': 'Tai v2.3',
-                
-                // How to update
                 'howto.step1': 'Tai file zip moi tu nut Download o tren',
                 'howto.step2': 'Giai nen va thay the folder extension cu',
                 'howto.step3': 'Vao <code>chrome://extensions</code> va bam <strong>Reload</strong>',
-                'howto.step4': '<strong>Quan trong:</strong> Reload trang Flow (F5) de nap code moi',
-                
-                // v2.3
-                'v23.title': 'Sua Loi Image Tab & Loi Duplicate Injection',
-                'v23.summary': 'Ban cap nhat quan trong sua cac loi nghiem trong o Image Tab va loi duplicate script injection gay crash extension.',
-                'v23.fix1': '<strong>Fix che do "Create Only" (Image Tab):</strong> Sua loi che do Create Only khong hoat dong. Nguyen nhan do message <code>IMG_START_BATCH_CREATE_ONLY</code> khong duoc xu ly dung trong content script.',
-                'v23.fix2': '<strong>Fix Loi Duplicate Injection:</strong> Sua loi <code>ImageBatchManager has already been declared</code> xay ra khi sidepanel inject scripts lan 2. Them marker check de tranh duplicate.',
-                'v23.fix3': '<strong>Fix Nut Reuse (Static Mode):</strong> Sua loi che do Static (Image Tab) click nham vao thumbnail thay vi nut "Reuse prompt". Viet lai logic tim nut bang XPath va text matching.',
-                'v23.fix4': '<strong>Fix PING Handler:</strong> Them <code>return true</code> cho PING handler trong <code>image_sequential.js</code> de giu message channel mo.',
-                'v23.imp1': '<strong>Smart Script Injection:</strong> Kiem tra marker <code>__FLOWFORGE_LOADED__</code> truoc khi inject de tranh chay code 2 lan.',
-                'v23.imp2': '<strong>Thong Bao Loi Tot Hon:</strong> Them log chi tiet hon khi ket noi that bai, huong dan user reload page.',
-                'v23.imp3': '<strong>Fallback Upload:</strong> Neu Reuse button khong hoat dong, tu dong re-upload tat ca reference images.',
-                'v23.file1': 'Them marker, fix message handler',
-                'v23.file2': 'Them handler cho IMG_START_BATCH_CREATE_ONLY',
-                'v23.file3': 'Viet lai tryReuseStaticImages()',
-                'v23.file4': 'Them fallback khi reuse fail',
-                'v23.file5': 'Smart injection voi marker check',
-                'v23.file6': 'Smart injection, dung content_bundle.js',
-                
-                // v2.2
-                'v22.title': 'Ho tro 4K Upscale & Fix loi Download',
-                'v22.summary': 'Phien ban cap nhat quan trong tap trung vao chat luong video 4K va sua cac loi ton dong giup trai nghiem muot ma hon.',
-                'v22.feat1': '<strong>Ho Tro Tai Video 4K (Upscale):</strong> Them tuy chon 4K vao menu. Tool tu dong chon "Upscale (4K)" va tang timeout len 10 phut de dam bao render hoan tat.',
-                'v22.feat2': '<strong>Cap Nhat Tab Image:</strong> Tinh nang Upscale anh (2K/4K) duoc cap nhat logic nhan dien moi, hoat dong on dinh hon.',
-                'v22.fix1': '<strong>Fix Loi "Download All":</strong> Da khac phuc viec Download All khong hoat dong voi video 4K. Gio day ban co the treo may tai toan bo video chat luong cao.',
-                'v22.fix2': '<strong>Fix Loi Menu chong cheo:</strong> Sua loi tool chon nham "Upscale" khi nguoi dung chon "1080p". Logic nhan dien gio chinh xac 100% cho 720p, 1080p va 4K.',
-                'v22.other1': 'Giao dien: Loai bo tuy chon GIF (270p) de tranh nham lan.',
-                'v22.other2': 'On dinh: Cai thien kha nang ket noi lai (Auto-reconnect) khi mang lag.'
+                'howto.step4': '<strong>Quan trong:</strong> Reload trang Flow (F5) de nap code moi'
             },
             en: {
-                // Navigation
                 'nav.back': 'Back to Home',
-                
-                // Page header
                 'page.title': 'Release Notes',
                 'page.subtitle': 'Track updates and releases of FlowForge Automator',
-                
-                // Tags
                 'tag.latest': 'Latest',
                 'tag.feature': 'New Feature',
                 'tag.bugfix': 'Bug Fix',
                 'tag.improvement': 'Improvement',
                 'tag.critical': 'Critical',
-                
-                // Sections
-                'section.feature': 'New Features',
-                'section.bugfix': 'Bug Fixes',
-                'section.improvement': 'Improvements',
-                'section.files': 'Files Changed',
-                'section.other': 'Other Changes',
+                'btn.download': 'Download',
                 'section.howto': 'How to Update',
-                
-                // Buttons
-                'btn.download': 'Download v2.3',
-                
-                // How to update
                 'howto.step1': 'Download the new zip file from the Download button above',
                 'howto.step2': 'Extract and replace the old extension folder',
                 'howto.step3': 'Go to <code>chrome://extensions</code> and click <strong>Reload</strong>',
-                'howto.step4': '<strong>Important:</strong> Reload the Flow page (F5) to load new code',
-                
-                // v2.3
-                'v23.title': 'Fix Image Tab & Duplicate Injection Error',
-                'v23.summary': 'Critical update fixing serious bugs in Image Tab and duplicate script injection that caused extension crash.',
-                'v23.fix1': '<strong>Fix "Create Only" Mode (Image Tab):</strong> Fixed Create Only mode not working. Root cause was message <code>IMG_START_BATCH_CREATE_ONLY</code> not being handled correctly in content script.',
-                'v23.fix2': '<strong>Fix Duplicate Injection Error:</strong> Fixed <code>ImageBatchManager has already been declared</code> error when sidepanel injects scripts twice. Added marker check to prevent duplicate.',
-                'v23.fix3': '<strong>Fix Static Mode Reuse Button:</strong> Fixed Static mode (Image Tab) clicking wrong element (thumbnail instead of "Reuse prompt" button). Rewrote button detection using XPath and text matching.',
-                'v23.fix4': '<strong>Fix PING Handler:</strong> Added <code>return true</code> to PING handler in <code>image_sequential.js</code> to keep message channel open.',
-                'v23.imp1': '<strong>Smart Script Injection:</strong> Check marker <code>__FLOWFORGE_LOADED__</code> before injection to avoid running code twice.',
-                'v23.imp2': '<strong>Better Error Messages:</strong> Added more detailed logs when connection fails, guiding user to reload page.',
-                'v23.imp3': '<strong>Fallback Upload:</strong> If Reuse button fails, automatically re-upload all reference images.',
-                'v23.file1': 'Added marker, fixed message handler',
-                'v23.file2': 'Added handler for IMG_START_BATCH_CREATE_ONLY',
-                'v23.file3': 'Rewrote tryReuseStaticImages()',
-                'v23.file4': 'Added fallback when reuse fails',
-                'v23.file5': 'Smart injection with marker check',
-                'v23.file6': 'Smart injection, use content_bundle.js',
-                
-                // v2.2
-                'v22.title': '4K Upscale Support & Download Bug Fix',
-                'v22.summary': 'Important update focusing on 4K video quality and fixing remaining bugs for smoother experience.',
-                'v22.feat1': '<strong>4K Video Download Support (Upscale):</strong> Added 4K option to menu. Tool automatically selects "Upscale (4K)" and increases timeout to 10 minutes to ensure render completion.',
-                'v22.feat2': '<strong>Image Tab Update:</strong> Image Upscale feature (2K/4K) updated with new detection logic, more stable operation.',
-                'v22.fix1': '<strong>Fix "Download All" Bug:</strong> Fixed Download All not working with 4K videos. Now you can batch download all high-quality videos.',
-                'v22.fix2': '<strong>Fix Menu Overlap Bug:</strong> Fixed tool selecting wrong "Upscale" when user chose "1080p". Detection logic now 100% accurate for 720p, 1080p and 4K.',
-                'v22.other1': 'UI: Removed GIF (270p) option to avoid confusion.',
-                'v22.other2': 'Stability: Improved auto-reconnect capability when network lags.'
+                'howto.step4': '<strong>Important:</strong> Reload the Flow page (F5) to load new code'
             }
         };
 
         let currentLang = 'vi';
+        let releasesData = [];
 
+        // ============== LANGUAGE FUNCTIONS ==============
         function detectUserLanguage() {
             const saved = localStorage.getItem('flowforge_lang');
             if (saved) {
@@ -859,33 +633,180 @@
                 const browserLang = navigator.language || navigator.userLanguage;
                 currentLang = browserLang.startsWith('vi') ? 'vi' : 'en';
             }
-            changeLanguage(currentLang);
         }
 
-        function changeLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('flowforge_lang', lang);
-
-            // Update Text
+        function applyTranslations() {
+            // Apply static translations
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang] && translations[lang][key]) {
-                    el.innerHTML = translations[lang][key];
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
                 }
             });
 
-            // Update Toggle Button
+            // Update toggle button
             const btn = document.getElementById('lang-toggle');
-            if (btn) btn.textContent = lang === 'vi' ? 'VN' : 'EN';
+            if (btn) btn.textContent = currentLang === 'vi' ? 'VN' : 'EN';
+
+            // Re-render releases with new language
+            if (releasesData.length > 0) {
+                renderReleases(releasesData);
+            }
         }
 
         function toggleLanguage() {
-            const newLang = currentLang === 'vi' ? 'en' : 'vi';
-            changeLanguage(newLang);
+            currentLang = currentLang === 'vi' ? 'en' : 'vi';
+            localStorage.setItem('flowforge_lang', currentLang);
+            applyTranslations();
         }
 
-        // Initialize
+        // ============== FETCH & RENDER RELEASES ==============
+        async function loadReleases() {
+            try {
+                // Fetch manifest
+                const manifestRes = await fetch('releases/manifest.json');
+                const manifest = await manifestRes.json();
+
+                // Fetch all release files
+                const releasePromises = manifest.releases.map(async (meta) => {
+                    const res = await fetch(`releases/${meta.file}`);
+                    const data = await res.json();
+                    return { ...data, isLatest: meta.isLatest };
+                });
+
+                releasesData = await Promise.all(releasePromises);
+
+                // Hide loading, show releases
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('releases-container').style.display = 'block';
+
+                renderReleases(releasesData);
+
+            } catch (error) {
+                console.error('Failed to load releases:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p style="color: #ef4444;">Failed to load releases. Please refresh the page.</p>
+                `;
+            }
+        }
+
+        function renderReleases(releases) {
+            const container = document.getElementById('releases-container');
+            container.innerHTML = '';
+
+            releases.forEach((release, index) => {
+                const card = createReleaseCard(release, index);
+                container.appendChild(card);
+            });
+
+            // Re-init AOS for new elements
+            AOS.refresh();
+        }
+
+        function createReleaseCard(release, index) {
+            const article = document.createElement('article');
+            article.className = `release-card${release.isLatest ? ' latest' : ''}`;
+            article.setAttribute('data-aos', 'fade-up');
+            article.setAttribute('data-aos-delay', index * 100);
+
+            const lang = currentLang;
+            const t = translations[lang];
+
+            // Build tags HTML
+            const tagsHtml = release.tags.map(tag => {
+                const tagLabel = t[`tag.${tag}`] || tag;
+                return `<span class="tag tag-${tag}">${tagLabel}</span>`;
+            }).join('');
+
+            // Build sections HTML
+            const sectionsHtml = release.sections.map(section => {
+                const sectionTitle = section.title[lang] || section.title.en;
+                const itemsHtml = section.items.map(item => {
+                    const itemClass = item.class || '';
+                    const itemText = item[lang] || item.en;
+                    return `<li class="${itemClass}">${itemText}</li>`;
+                }).join('');
+
+                return `
+                    <div class="changes-section">
+                        <h4><span class="emoji">${section.emoji}</span> ${sectionTitle}</h4>
+                        <ul class="changes-list">${itemsHtml}</ul>
+                    </div>
+                `;
+            }).join('');
+
+            // Download button (only for latest or if has downloadUrl)
+            let downloadHtml = '';
+            if (release.downloadUrl) {
+                downloadHtml = `
+                    <div class="download-section">
+                        <a href="${release.downloadUrl}" class="download-btn" target="_blank">
+                            <svg fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                            </svg>
+                            ${t['btn.download']} v${release.version}
+                        </a>
+                        <span class="download-info">${release.downloadFileName}</span>
+                    </div>
+                `;
+            }
+
+            // Update instructions (only for latest)
+            let updateInstructionsHtml = '';
+            if (release.isLatest) {
+                updateInstructionsHtml = `
+                    <div class="update-instructions">
+                        <h5>
+                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                            </svg>
+                            ${t['section.howto']}
+                        </h5>
+                        <ol>
+                            <li>${t['howto.step1']}</li>
+                            <li>${t['howto.step2']}</li>
+                            <li>${t['howto.step3']}</li>
+                            <li>${t['howto.step4']}</li>
+                        </ol>
+                    </div>
+                `;
+            }
+
+            article.innerHTML = `
+                <div class="release-header">
+                    <div class="release-info">
+                        <div class="release-version">
+                            v${release.version}
+                            ${release.isLatest ? `<span class="latest-badge">${t['tag.latest']}</span>` : ''}
+                        </div>
+                        <div class="release-date">
+                            <svg fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2z"/>
+                            </svg>
+                            ${release.date}
+                        </div>
+                        <h3 class="release-title">${release.title[lang] || release.title.en}</h3>
+                        <div class="release-tags">${tagsHtml}</div>
+                    </div>
+                    ${downloadHtml}
+                </div>
+
+                <div class="release-body">
+                    <p class="release-summary">${release.summary[lang] || release.summary.en}</p>
+                    ${sectionsHtml}
+                    ${updateInstructionsHtml}
+                </div>
+            `;
+
+            return article;
+        }
+
+        // ============== INITIALIZE ==============
         detectUserLanguage();
+        applyTranslations();
+        loadReleases();
     </script>
 </body>
 
