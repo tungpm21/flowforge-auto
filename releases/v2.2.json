@@ -20,8 +20,8 @@
       "items": [
         {
           "class": "feat",
-          "vi": "<strong>Hỗ trợ Tải Video 4K (Nâng cấp):</strong> Thêm tùy chọn 4K vào trình đơn. Công cụ tự động chọn \"Upscale (4K)\" và tăng thời gian chờ lên 10 phút để đảm bảo quá trình xử lý hoàn tất.",
-          "en": "<strong>4K Video Download Support (Upscale):</strong> Added 4K option to menu. Tool automatically selects \"Upscale (4K)\" and increases timeout to 10 minutes to ensure render completion."
+          "vi": "<strong>Hỗ trợ Tải Video 4K:</strong> Thêm tùy chọn 4K vào trình đơn. Công cụ tự động chọn \"Upscale (4K)\" và tăng thời gian chờ lên 10 phút để đảm bảo quá trình xử lý hoàn tất.",
+          "en": "<strong>4K Video Download Support:</strong> Added 4K option to menu. Tool automatically selects \"Upscale (4K)\" and increases timeout to 10 minutes to ensure render completion."
         },
         {
           "class": "feat",
@@ -42,8 +42,8 @@
         },
         {
           "class": "fix",
-          "vi": "<strong>Sửa lỗi Trình đơn chồng chéo:</strong> Khắc phục việc chọn nhầm \"Upscale\" khi người dùng chọn \"1080p\". Logic nhận diện giờ đây chính xác tuyệt đối cho các độ phân giải 720p, 1080p và 4K.",
-          "en": "<strong>Fix Menu Overlap Bug:</strong> Fixed tool selecting wrong \"Upscale\" when user chose \"1080p\". Detection logic now 100% accurate for 720p, 1080p and 4K."
+          "vi": "<strong>Sửa lỗi Trình đơn chồng chéo:</strong> Khắc phục việc chọn nhầm \"Upscale\" khi người dùng chọn \"1080p\". Logic nhận diện giờ đây chính xác tuyệt đối.",
+          "en": "<strong>Fix Menu Overlap Bug:</strong> Fixed tool selecting wrong \"Upscale\" when user chose \"1080p\". Detection logic now 100% accurate."
         }
       ]
     },
