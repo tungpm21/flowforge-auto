@@ -5,37 +5,37 @@
   "downloadFileName": "FlowForge_2501.zip",
   "tags": ["bugfix", "critical", "improvement"],
   "title": {
-    "vi": "Sua Loi Image Tab & Loi Duplicate Injection",
+    "vi": "Sửa lỗi Tab Ảnh & Lỗi Trùng Lặp Script",
     "en": "Fix Image Tab & Duplicate Injection Error"
   },
   "summary": {
-    "vi": "Ban cap nhat quan trong sua cac loi nghiem trong o Image Tab va loi duplicate script injection gay crash extension.",
+    "vi": "Bản cập nhật quan trọng sửa các lỗi nghiêm trọng tại Tab Ảnh và lỗi lặp lại việc nhúng script gây sập tiện ích.",
     "en": "Critical update fixing serious bugs in Image Tab and duplicate script injection that caused extension crash."
   },
   "sections": [
     {
       "type": "bugfix",
       "emoji": "🐛",
-      "title": { "vi": "Sua Loi", "en": "Bug Fixes" },
+      "title": { "vi": "Sửa Lỗi", "en": "Bug Fixes" },
       "items": [
         {
           "class": "fix",
-          "vi": "<strong>Fix che do \"Create Only\" (Image Tab):</strong> Sua loi che do Create Only khong hoat dong. Nguyen nhan do message <code>IMG_START_BATCH_CREATE_ONLY</code> khong duoc xu ly dung trong content script.",
+          "vi": "<strong>Sửa chế độ \"Chỉ Tạo\" (Tab Ảnh):</strong> Khắc phục lỗi chế độ Chỉ Tạo không hoạt động do thông điệp <code>IMG_START_BATCH_CREATE_ONLY</code> chưa được xử lý đúng.",
           "en": "<strong>Fix \"Create Only\" Mode (Image Tab):</strong> Fixed Create Only mode not working. Root cause was message <code>IMG_START_BATCH_CREATE_ONLY</code> not being handled correctly in content script."
         },
         {
           "class": "fix",
-          "vi": "<strong>Fix Loi Duplicate Injection:</strong> Sua loi <code>ImageBatchManager has already been declared</code> xay ra khi sidepanel inject scripts lan 2. Them marker check de tranh duplicate.",
+          "vi": "<strong>Sửa lỗi Trùng Lặp Script:</strong> Khắc phục lỗi <code>ImageBatchManager has already been declared</code> khi Sidepanel nhúng script nhiều lần. Thêm cơ chế kiểm tra marker để tránh trùng lặp.",
           "en": "<strong>Fix Duplicate Injection Error:</strong> Fixed <code>ImageBatchManager has already been declared</code> error when sidepanel injects scripts twice. Added marker check to prevent duplicate."
         },
         {
           "class": "fix",
-          "vi": "<strong>Fix Nut Reuse (Static Mode):</strong> Sua loi che do Static (Image Tab) click nham vao thumbnail thay vi nut \"Reuse prompt\". Viet lai logic tim nut bang XPath va text matching.",
+          "vi": "<strong>Sửa nút Sử dụng lại (Chế độ Tĩnh):</strong> Khắc phục lỗi nhấn nhầm vào ảnh thay vì nút \"Sử dụng lại câu lệnh\". Tối ưu lại logic tìm nút bằng XPath và đối khớp văn bản.",
           "en": "<strong>Fix Static Mode Reuse Button:</strong> Fixed Static mode (Image Tab) clicking wrong element (thumbnail instead of \"Reuse prompt\" button). Rewrote button detection using XPath and text matching."
         },
         {
           "class": "fix",
-          "vi": "<strong>Fix PING Handler:</strong> Them <code>return true</code> cho PING handler trong <code>image_sequential.js</code> de giu message channel mo.",
+          "vi": "<strong>Sửa PING Handler:</strong> Thêm <code>return true</code> cho trình xử lý PING trong <code>image_sequential.js</code> để giữ kênh giao tiếp luôn mở.",
           "en": "<strong>Fix PING Handler:</strong> Added <code>return true</code> to PING handler in <code>image_sequential.js</code> to keep message channel open."
         }
       ]
@@ -43,21 +43,21 @@
     {
       "type": "improvement",
       "emoji": "🔧",
-      "title": { "vi": "Cai Tien", "en": "Improvements" },
+      "title": { "vi": "Cải Tiến", "en": "Improvements" },
       "items": [
         {
           "class": "improve",
-          "vi": "<strong>Smart Script Injection:</strong> Kiem tra marker <code>__FLOWFORGE_LOADED__</code> truoc khi inject de tranh chay code 2 lan.",
+          "vi": "<strong>Nhúng Script Thông Minh:</strong> Kiểm tra marker <code>__FLOWFORGE_LOADED__</code> trước khi nhúng để tránh chạy mã nguồn hai lần.",
           "en": "<strong>Smart Script Injection:</strong> Check marker <code>__FLOWFORGE_LOADED__</code> before injection to avoid running code twice."
         },
         {
           "class": "improve",
-          "vi": "<strong>Thong Bao Loi Tot Hon:</strong> Them log chi tiet hon khi ket noi that bai, huong dan user reload page.",
+          "vi": "<strong>Thông Báo Lỗi Chi Tiết:</strong> Bổ sung bản ghi log chi tiết khi kết nối thất bại, hướng dẫn người dùng tải lại trang.",
           "en": "<strong>Better Error Messages:</strong> Added more detailed logs when connection fails, guiding user to reload page."
         },
         {
           "class": "improve",
-          "vi": "<strong>Fallback Upload:</strong> Neu Reuse button khong hoat dong, tu dong re-upload tat ca reference images.",
+          "vi": "<strong>Tải Lên Dự Phòng:</strong> Nếu nút Sử dụng lại không hoạt động, hệ thống sẽ tự động tải lại toàn bộ ảnh tham chiếu.",
           "en": "<strong>Fallback Upload:</strong> If Reuse button fails, automatically re-upload all reference images."
         }
       ]
@@ -65,36 +65,36 @@
     {
       "type": "files",
       "emoji": "📁",
-      "title": { "vi": "Files Da Thay Doi", "en": "Files Changed" },
+      "title": { "vi": "Tệp Tin Thay Đổi", "en": "Files Changed" },
       "items": [
         {
           "class": "",
-          "vi": "<code>src/content_main.js</code> - Them marker, fix message handler",
+          "vi": "<code>src/content_main.js</code> - Thêm marker, sửa trình xử lý thông điệp",
           "en": "<code>src/content_main.js</code> - Added marker, fixed message handler"
         },
         {
           "class": "",
-          "vi": "<code>src/logic/image_sequential.js</code> - Them handler cho IMG_START_BATCH_CREATE_ONLY",
+          "vi": "<code>src/logic/image_sequential.js</code> - Thêm trình xử lý cho IMG_START_BATCH_CREATE_ONLY",
           "en": "<code>src/logic/image_sequential.js</code> - Added handler for IMG_START_BATCH_CREATE_ONLY"
         },
         {
           "class": "",
-          "vi": "<code>src/logic/image_uploader.js</code> - Viet lai tryReuseStaticImages()",
+          "vi": "<code>src/logic/image_uploader.js</code> - Viết lại hàm tryReuseStaticImages()",
           "en": "<code>src/logic/image_uploader.js</code> - Rewrote tryReuseStaticImages()"
         },
         {
           "class": "",
-          "vi": "<code>src/logic/image_batch.js</code> - Them fallback khi reuse fail",
+          "vi": "<code>src/logic/image_batch.js</code> - Thêm cơ chế dự phòng khi reuse thất bại",
           "en": "<code>src/logic/image_batch.js</code> - Added fallback when reuse fails"
         },
         {
           "class": "",
-          "vi": "<code>src/sidepanel_video.js</code> - Smart injection voi marker check",
+          "vi": "<code>src/sidepanel_video.js</code> - Nhúng script thông minh với kiểm tra marker",
           "en": "<code>src/sidepanel_video.js</code> - Smart injection with marker check"
         },
         {
           "class": "",
-          "vi": "<code>src/sidepanel_image.js</code> - Smart injection, dung content_bundle.js",
+          "vi": "<code>src/sidepanel_image.js</code> - Nhúng script thông minh, sử dụng content_bundle.js",
           "en": "<code>src/sidepanel_image.js</code> - Smart injection, use content_bundle.js"
         }
       ]
