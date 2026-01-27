@@ -1,0 +1,71 @@
+{
+  "version": "2.4",
+  "date": "2026-01-27",
+  "downloadUrl": "https://drive.google.com/file/d/1Zjv2YfGolXRaDROPyuqawTBYunlvXOdo/view?usp=sharing",
+  "downloadFileName": "FlowForge_2701_v2.zip",
+  "tags": ["bugfix", "critical", "improvement"],
+  "title": {
+    "vi": "Sửa Lỗi Image Batch & Cải Tiến Phát Hiện Chế Độ",
+    "en": "Fix Image Batch & Improved Mode Detection"
+  },
+  "summary": {
+    "vi": "Bản cập nhật quan trọng sửa lỗi pipeline Image Batch bị treo, cải tiến phát hiện chế độ Flow, và bỏ thao tác tự động chỉnh tỉ lệ ảnh.",
+    "en": "Critical update fixing Image Batch pipeline stuck issue, improved Flow mode detection, and removed automatic aspect ratio adjustment."
+  },
+  "sections": [
+    {
+      "type": "bugfix",
+      "emoji": "🐛",
+      "title": { "vi": "Sửa Lỗi", "en": "Bug Fixes" },
+      "items": [
+        {
+          "class": "fix",
+          "vi": "<strong>Sửa Image Batch bị treo:</strong> Khắc phục lỗi pipeline batch mode chỉ chạy 4 prompt đầu rồi dừng. Giờ đây sử dụng hybrid detection (card count + alt text match) để phát hiện task hoàn thành chính xác hơn.",
+          "en": "<strong>Fix Image Batch stuck:</strong> Fixed batch pipeline running only first 4 prompts then freezing. Now uses hybrid detection (card count + alt text match) for more accurate task completion detection."
+        },
+        {
+          "class": "fix",
+          "vi": "<strong>Sửa phát hiện chế độ Flow:</strong> Khắc phục lỗi mode detection luôn trả về 'unknown' khiến app chạy sai chế độ. Giờ sử dụng selector <code>button[role=\"combobox\"]</code> để đọc chính xác mode hiện tại.",
+          "en": "<strong>Fix Flow mode detection:</strong> Fixed mode detection always returning 'unknown' causing app to run in wrong mode. Now uses <code>button[role=\"combobox\"]</code> selector to accurately read current mode."
+        },
+        {
+          "class": "fix",
+          "vi": "<strong>Sửa bypass chế độ Unknown:</strong> Trước đây khi không phát hiện được mode, app vẫn chạy. Giờ sẽ hiện confirm dialog để người dùng xác nhận trước khi tiếp tục.",
+          "en": "<strong>Fix Unknown mode bypass:</strong> Previously when mode couldn't be detected, app would still run. Now shows confirm dialog for user to verify before continuing."
+        },
+        {
+          "class": "fix",
+          "vi": "<strong>Bỏ tự động chỉnh Landscape:</strong> Khắc phục lỗi video luôn bị ép thành 16:9. App không còn tự động click nút Landscape/Ngang khi upload ảnh - để người dùng tự setting trên Flow.",
+          "en": "<strong>Remove auto Landscape adjustment:</strong> Fixed videos always forced to 16:9. App no longer auto-clicks Landscape button when uploading images - user controls aspect ratio via Flow settings."
+        }
+      ]
+    },
+    {
+      "type": "improvement",
+      "emoji": "🔧",
+      "title": { "vi": "Cải Tiến", "en": "Improvements" },
+      "items": [
+        {
+          "class": "improve",
+          "vi": "<strong>Hybrid Task Detection:</strong> Kết hợp 4 phương pháp: Card count, Alt text matching (60% fuzzy), Error card detection, và Timeout check để xác định trạng thái task chính xác hơn.",
+          "en": "<strong>Hybrid Task Detection:</strong> Combines 4 methods: Card count, Alt text matching (60% fuzzy), Error card detection, and Timeout check for more accurate task status determination."
+        },
+        {
+          "class": "improve",
+          "vi": "<strong>Giảm Timeout:</strong> Giảm timeout từ 6 phút xuống 3 phút để pipeline không bị treo quá lâu khi có lỗi.",
+          "en": "<strong>Reduced Timeout:</strong> Reduced timeout from 6 minutes to 3 minutes so pipeline doesn't hang too long when errors occur."
+        },
+        {
+          "class": "improve",
+          "vi": "<strong>Debug Logs:</strong> Thêm console.log chi tiết trong mode detection để dễ dàng troubleshoot khi có vấn đề.",
+          "en": "<strong>Debug Logs:</strong> Added detailed console.log in mode detection for easier troubleshooting when issues occur."
+        },
+        {
+          "class": "improve",
+          "vi": "<strong>Cải tiến đánh số file:</strong> Sửa logic đánh số file trong Image Batch để tên file theo đúng thứ tự prompt trong list (1-15) thay vì nhảy số.",
+          "en": "<strong>Improved file numbering:</strong> Fixed file numbering logic in Image Batch so filenames follow correct prompt order in list (1-15) instead of jumping numbers."
+        }
+      ]
+    }
+  ]
+}

@@ -1,10 +1,16 @@
 {
   "releases": [
     {
+      "version": "2.4",
+      "date": "2026-01-27",
+      "file": "v2.4.json",
+      "isLatest": true
+    },
+    {
       "version": "2.3",
       "date": "2026-01-27",
       "file": "v2.3.json",
-      "isLatest": true
+      "isLatest": false
     },
     {
       "version": "2.2",
