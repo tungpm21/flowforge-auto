@@ -25,11 +25,8 @@
     <style>
         :root {
             --bg-dark: #0d0d0d;
-            --bg-card: #161616;
             --primary: #f5a623;
             --secondary: #22d3ee;
-            --success: #22c55e;
-            --purple: #a855f7;
             --text-main: #ffffff;
             --text-muted: #a1a1aa;
             --border-color: #262626;
@@ -46,7 +43,6 @@
             background-color: var(--bg-dark);
             color: var(--text-main);
             overflow-x: hidden;
-            line-height: 1.6;
         }
 
         /* Ambient Background */
@@ -88,12 +84,17 @@
         }
 
         @keyframes floatBlob {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
@@ -120,424 +121,143 @@
             color: var(--primary);
         }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .logo-accent {
-            color: var(--secondary);
-        }
-
-        /* Language Toggle Button */
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--text-main);
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: var(--secondary);
-            color: var(--secondary);
-        }
-
-        /* Page Title */
-        .page-header {
-            margin: 2rem 0 3rem;
+        /* Content */
+        .page-title {
+            margin: 3rem 0;
             text-align: center;
         }
 
-        .page-header h1 {
+        .page-title h1 {
             font-size: 2.5rem;
             margin-bottom: 0.5rem;
             background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .page-header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
-
-        /* Loading State */
-        .loading {
-            text-align: center;
-            padding: 4rem 0;
+        .page-title p {
             color: var(--text-muted);
         }
 
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--border-color);
-            border-top-color: var(--secondary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Timeline */
-        .releases-timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-
-        .releases-timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(180deg, var(--secondary) 0%, var(--primary) 50%, var(--border-color) 100%);
-        }
-
-        /* Release Card */
-        .release-card {
-            position: relative;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+        /* Glass Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 2rem;
             margin-bottom: 2rem;
-            overflow: hidden;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
-        .release-card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .release-card::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 2rem;
-            width: 16px;
-            height: 16px;
-            background: var(--bg-dark);
-            border: 3px solid var(--secondary);
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        .release-card.latest::before {
-            background: var(--secondary);
-            box-shadow: 0 0 12px var(--secondary);
-        }
-
-        /* Release Header */
-        .release-header {
-            padding: 1.5rem 2rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-bottom: 1px solid var(--border-color);
+        /* Update Post */
+        .update-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
         }
 
-        .release-info {
-            flex: 1;
-            min-width: 250px;
-        }
-
-        .release-version {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
+        .update-date {
             font-family: 'JetBrains Mono', monospace;
+            color: var(--secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .update-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 0.25rem;
-        }
-
-        .release-version .latest-badge {
-            background: linear-gradient(135deg, var(--success), #16a34a);
             color: #fff;
-            font-size: 0.65rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .release-date {
-            font-size: 0.875rem;
-            color: var(--text-muted);
+        .update-tags {
             display: flex;
-            align-items: center;
             gap: 0.5rem;
-        }
-
-        .release-date svg {
-            width: 14px;
-            height: 14px;
-            opacity: 0.7;
-        }
-
-        .release-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-main);
-            margin-top: 0.5rem;
-        }
-
-        /* Download Button */
-        .download-section {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.5rem;
-        }
-
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.25rem;
-            background: linear-gradient(135deg, var(--success), #16a34a);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
-        }
-
-        .download-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .download-info {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        /* Tags */
-        .release-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 1rem;
         }
 
         .tag {
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .tag-feature {
-            background: rgba(34, 211, 238, 0.15);
+        .tag-feat {
+            background: rgba(34, 211, 238, 0.1);
             color: var(--secondary);
-            border: 1px solid rgba(34, 211, 238, 0.3);
         }
 
-        .tag-bugfix {
-            background: rgba(245, 166, 35, 0.15);
+        .tag-fix {
+            background: rgba(245, 166, 35, 0.1);
             color: var(--primary);
-            border: 1px solid rgba(245, 166, 35, 0.3);
         }
 
-        .tag-improvement {
-            background: rgba(168, 85, 247, 0.15);
-            color: var(--purple);
-            border: 1px solid rgba(168, 85, 247, 0.3);
+        .tag-opt {
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
         }
 
-        .tag-critical {
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-        }
-
-        /* Release Body */
-        .release-body {
-            padding: 1.5rem 2rem;
-        }
-
-        .release-summary {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-        }
-
-        .changes-section {
-            margin-bottom: 1.5rem;
-        }
-
-        .changes-section h4 {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--text-main);
-        }
-
-        .changes-section h4 .emoji {
+        .update-body h3 {
             font-size: 1.1rem;
+            color: #eaeaea;
+            margin: 1.5rem 0 0.5rem;
         }
 
-        .changes-list {
+        .update-body ul {
             list-style: none;
-            margin: 0;
-            padding: 0;
+            margin-left: 0;
         }
 
-        .changes-list li {
-            position: relative;
-            padding: 0.5rem 0 0.5rem 1.5rem;
+        .update-body li {
+            margin-bottom: 0.5rem;
             color: #ccc;
-            font-size: 0.9rem;
-            border-left: 2px solid var(--border-color);
-            margin-left: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
         }
 
-        .changes-list li::before {
-            content: '';
+        .update-body li::before {
+            content: "•";
             position: absolute;
-            left: -5px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
-            background: var(--border-color);
-            border-radius: 50%;
+            left: 0;
+            color: var(--text-muted);
         }
 
-        .changes-list li.feat::before {
-            background: var(--secondary);
-        }
-
-        .changes-list li.fix::before {
-            background: var(--primary);
-        }
-
-        .changes-list li.improve::before {
-            background: var(--purple);
-        }
-
-        .changes-list li strong {
+        .update-body strong {
             color: #fff;
         }
 
-        .changes-list li code {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-        }
-
-        /* Update Instructions */
-        .update-instructions {
-            background: rgba(34, 211, 238, 0.05);
-            border: 1px solid rgba(34, 211, 238, 0.2);
-            border-radius: 8px;
-            padding: 1rem 1.25rem;
-            margin-top: 1rem;
-        }
-
-        .update-instructions h5 {
-            color: var(--secondary);
-            font-size: 0.9rem;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .update-instructions ol {
-            margin-left: 1.25rem;
-            color: #aaa;
-            font-size: 0.85rem;
-        }
-
-        .update-instructions ol li {
-            margin-bottom: 0.25rem;
-        }
-
-        .update-instructions code {
+        .instruction-box {
             background: rgba(0, 0, 0, 0.3);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--secondary);
+            margin-top: 1.5rem;
         }
 
-        /* Footer */
+        .instruction-box h4 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
         footer {
             text-align: center;
             padding: 3rem 0;
             color: var(--text-muted);
             font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid #222;
             margin-top: 4rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 640px) {
-            .release-header {
-                flex-direction: column;
-            }
-            
-            .download-section {
-                width: 100%;
-                align-items: flex-start;
-            }
-            
-            .download-btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .releases-timeline {
-                padding-left: 1.5rem;
-            }
-            
-            .release-card::before {
-                left: -1.5rem;
-                width: 12px;
-                height: 12px;
-            }
         }
     </style>
 </head>
@@ -550,31 +270,67 @@
 
     <div class="container">
         <header>
-            <a href="index.html" class="home-link">
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                </svg>
-                <span data-i18n="nav.back">Quay về Trang chủ</span>
-            </a>
-            <div class="header-right">
-                <button id="lang-toggle" onclick="toggleLanguage()" class="lang-btn">VN</button>
-                <div class="logo">FLOWFORGE<span class="logo-accent">.LOG</span></div>
-            </div>
+            <a href="index.html" class="home-link">← Quay về Trang chủ</a>
+            <div style="font-family: 'JetBrains Mono'; font-weight: 700;">FLOWFORGE<span
+                    style="color: var(--secondary)">.LOG</span></div>
         </header>
 
-        <section class="page-header" data-aos="fade-down">
-            <h1 data-i18n="page.title">Release Notes</h1>
-            <p data-i18n="page.subtitle">Theo dõi các phiên bản cập nhật của FlowForge Automator</p>
+        <section class="page-title" data-aos="fade-down">
+            <h1>Lịch sử Cập nhật</h1>
+            <p>Theo dõi các tính năng mới và bản vá lỗi của FlowForge Automator.</p>
         </section>
 
-        <!-- Loading state -->
-        <div id="loading" class="loading">
-            <div class="loading-spinner"></div>
-            <p>Loading releases...</p>
-        </div>
+        <!-- Update 25/01/2026 -->
+        <article class="glass-card" data-aos="fade-up">
+            <div class="update-header">
+                <div>
+                    <span class="update-date">25/01/2026</span>
+                    <h2 class="update-title">Hỗ trợ 4K Upscale & Fix lỗi Download</h2>
+                </div>
+                <div class="update-tags">
+                    <span class="tag tag-feat">New Feature</span>
+                    <span class="tag tag-fix">Bug Fix</span>
+                </div>
+            </div>
 
-        <!-- Releases will be rendered here -->
-        <div id="releases-container" class="releases-timeline" style="display: none;"></div>
+            <div class="update-body">
+                <p>Phiên bản cập nhật quan trọng tập trung vào chất lượng video 4K và sửa các lỗi tồn đọng giúp trải
+                    nghiệm mượt mà hơn.</p>
+
+                <h3>✨ Tính Năng Mới & Cải Tiến</h3>
+                <ul>
+                    <li><strong>Hỗ Trợ Tải Video 4K (Upscale):</strong> Thêm tùy chọn 4K vào menu. Tool tự động chọn
+                        "Upscale (4K)" và tăng timeout lên 10 phút để đảm bảo render hoàn tất.</li>
+                    <li><strong>Cập Nhật Tab Image:</strong> Tính năng Upscale ảnh (2K/4K) được cập nhật logic nhận diện
+                        mới, hoạt động ổn định hơn.</li>
+                </ul>
+
+                <h3>🛠️ Sửa Lỗi (Bug Fixes)</h3>
+                <ul>
+                    <li><strong>Fix Lỗi "Download All":</strong> Đã khắc phục việc Download All không hoạt động với
+                        video 4K. Giờ đây bạn có thể treo máy tải toàn bộ video chất lượng cao.</li>
+                    <li><strong>Fix Lỗi Menu chồng chéo:</strong> Sửa lỗi tool chọn nhầm "Upscale" khi người dùng chọn
+                        "1080p". Logic nhận diện giờ chính xác 100% cho 720p, 1080p và 4K.</li>
+                </ul>
+
+                <h3>⚙️ Thay Đổi Khác</h3>
+                <ul>
+                    <li>Giao diện: Loại bỏ tùy chọn GIF (270p) để tránh nhầm lẫn.</li>
+                    <li>Ổn định: Cải thiện khả năng kết nối lại (Auto-reconnect) khi mạng lag.</li>
+                </ul>
+
+                <div class="instruction-box">
+                    <h4>👉 Hướng dẫn cập nhật</h4>
+                    <ol style="margin-left: 1.5rem; color: #ccc;">
+                        <li>Tải bộ code mới nhất từ Gumroad/Email.</li>
+                        <li>Truy cập <code>chrome://extensions</code>.</li>
+                        <li>Bấm nút <strong>Reload</strong> ⟳ ở extension FlowForge.</li>
+                        <li>F5 lại trang Veo/Flow để nạp code mới.</li>
+                    </ol>
+                </div>
+            </div>
+        </article>
+
     </div>
 
     <footer>
@@ -582,232 +338,7 @@
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init({ duration: 600, once: true });</script>
-
-    <script>
-        // ============== STATIC TRANSLATIONS (UI elements) ==============
-        const translations = {
-            vi: {
-                'nav.back': 'Quay về Trang chủ',
-                'page.title': 'Lịch Sử Cập Nhật',
-                'page.subtitle': 'Theo dõi các phiên bản cập nhật của FlowForge Automator',
-                'tag.latest': 'Mới nhất',
-                'tag.feature': 'Tính năng mới',
-                'tag.bugfix': 'Sửa lỗi',
-                'tag.improvement': 'Cải tiến',
-                'tag.critical': 'Quan trọng',
-                'btn.download': 'Tải xuống',
-                'section.howto': 'Hướng dẫn cập nhật',
-                'howto.step1': 'Tải tệp tin .zip mới từ nút Tải xuống ở trên',
-                'howto.step2': 'Giải nén và thay thế thư mục tiện ích cũ',
-                'howto.step3': 'Truy cập <code>chrome://extensions</code> và nhấn <strong>Tải lại (Reload)</strong>',
-                'howto.step4': '<strong>Quan trọng:</strong> Tải lại trang Flow (nhấn F5) để áp dụng mã nguồn mới'
-            },
-            en: {
-                'nav.back': 'Back to Home',
-                'page.title': 'Release Notes',
-                'page.subtitle': 'Track updates and releases of FlowForge Automator',
-                'tag.latest': 'Latest',
-                'tag.feature': 'New Feature',
-                'tag.bugfix': 'Bug Fix',
-                'tag.improvement': 'Improvement',
-                'tag.critical': 'Critical',
-                'btn.download': 'Download',
-                'section.howto': 'How to Update',
-                'howto.step1': 'Download the new zip file from the Download button above',
-                'howto.step2': 'Extract and replace the old extension folder',
-                'howto.step3': 'Go to <code>chrome://extensions</code> and click <strong>Reload</strong>',
-                'howto.step4': '<strong>Important:</strong> Reload the Flow page (F5) to load new code'
-            }
-        };
-
-        let currentLang = 'vi';
-        let releasesData = [];
-
-        // ============== LANGUAGE FUNCTIONS ==============
-        function detectUserLanguage() {
-            const saved = localStorage.getItem('flowforge_lang');
-            if (saved) {
-                currentLang = saved;
-            } else {
-                const browserLang = navigator.language || navigator.userLanguage;
-                currentLang = browserLang.startsWith('vi') ? 'vi' : 'en';
-            }
-        }
-
-        function applyTranslations() {
-            // Apply static translations
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[currentLang] && translations[currentLang][key]) {
-                    el.innerHTML = translations[currentLang][key];
-                }
-            });
-
-            // Update toggle button
-            const btn = document.getElementById('lang-toggle');
-            if (btn) btn.textContent = currentLang === 'vi' ? 'VN' : 'EN';
-
-            // Re-render releases with new language
-            if (releasesData.length > 0) {
-                renderReleases(releasesData);
-            }
-        }
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'vi' ? 'en' : 'vi';
-            localStorage.setItem('flowforge_lang', currentLang);
-            applyTranslations();
-        }
-
-        // ============== FETCH & RENDER RELEASES ==============
-        async function loadReleases() {
-            try {
-                // Fetch manifest
-                const manifestRes = await fetch('releases/manifest.json');
-                const manifest = await manifestRes.json();
-
-                // Fetch all release files
-                const releasePromises = manifest.releases.map(async (meta) => {
-                    const res = await fetch(`releases/${meta.file}`);
-                    const data = await res.json();
-                    return { ...data, isLatest: meta.isLatest };
-                });
-
-                releasesData = await Promise.all(releasePromises);
-
-                // Hide loading, show releases
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('releases-container').style.display = 'block';
-
-                renderReleases(releasesData);
-
-            } catch (error) {
-                console.error('Failed to load releases:', error);
-                document.getElementById('loading').innerHTML = `
-                    <p style="color: #ef4444;">Failed to load releases. Please refresh the page.</p>
-                `;
-            }
-        }
-
-        function renderReleases(releases) {
-            const container = document.getElementById('releases-container');
-            container.innerHTML = '';
-
-            releases.forEach((release, index) => {
-                const card = createReleaseCard(release, index);
-                container.appendChild(card);
-            });
-
-            // Re-init AOS for new elements
-            AOS.refresh();
-        }
-
-        function createReleaseCard(release, index) {
-            const article = document.createElement('article');
-            article.className = `release-card${release.isLatest ? ' latest' : ''}`;
-            article.setAttribute('data-aos', 'fade-up');
-            article.setAttribute('data-aos-delay', index * 100);
-
-            const lang = currentLang;
-            const t = translations[lang];
-
-            // Build tags HTML
-            const tagsHtml = release.tags.map(tag => {
-                const tagLabel = t[`tag.${tag}`] || tag;
-                return `<span class="tag tag-${tag}">${tagLabel}</span>`;
-            }).join('');
-
-            // Build sections HTML
-            const sectionsHtml = release.sections.map(section => {
-                const sectionTitle = section.title[lang] || section.title.en;
-                const itemsHtml = section.items.map(item => {
-                    const itemClass = item.class || '';
-                    const itemText = item[lang] || item.en;
-                    return `<li class="${itemClass}">${itemText}</li>`;
-                }).join('');
-
-                return `
-                    <div class="changes-section">
-                        <h4><span class="emoji">${section.emoji}</span> ${sectionTitle}</h4>
-                        <ul class="changes-list">${itemsHtml}</ul>
-                    </div>
-                `;
-            }).join('');
-
-            // Download button (only for latest or if has downloadUrl)
-            let downloadHtml = '';
-            if (release.downloadUrl) {
-                downloadHtml = `
-                    <div class="download-section">
-                        <a href="${release.downloadUrl}" class="download-btn" target="_blank">
-                            <svg fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                            </svg>
-                            ${t['btn.download']} v${release.version}
-                        </a>
-                        <span class="download-info">${release.downloadFileName}</span>
-                    </div>
-                `;
-            }
-
-            // Update instructions (only for latest)
-            let updateInstructionsHtml = '';
-            if (release.isLatest) {
-                updateInstructionsHtml = `
-                    <div class="update-instructions">
-                        <h5>
-                            <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                            </svg>
-                            ${t['section.howto']}
-                        </h5>
-                        <ol>
-                            <li>${t['howto.step1']}</li>
-                            <li>${t['howto.step2']}</li>
-                            <li>${t['howto.step3']}</li>
-                            <li>${t['howto.step4']}</li>
-                        </ol>
-                    </div>
-                `;
-            }
-
-            article.innerHTML = `
-                <div class="release-header">
-                    <div class="release-info">
-                        <div class="release-version">
-                            v${release.version}
-                            ${release.isLatest ? `<span class="latest-badge">${t['tag.latest']}</span>` : ''}
-                        </div>
-                        <div class="release-date">
-                            <svg fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2z"/>
-                            </svg>
-                            ${release.date}
-                        </div>
-                        <h3 class="release-title">${release.title[lang] || release.title.en}</h3>
-                        <div class="release-tags">${tagsHtml}</div>
-                    </div>
-                    ${downloadHtml}
-                </div>
-
-                <div class="release-body">
-                    <p class="release-summary">${release.summary[lang] || release.summary.en}</p>
-                    ${sectionsHtml}
-                    ${updateInstructionsHtml}
-                </div>
-            `;
-
-            return article;
-        }
-
-        // ============== INITIALIZE ==============
-        detectUserLanguage();
-        applyTranslations();
-        loadReleases();
-    </script>
+    <script>AOS.init();</script>
 </body>
 
 </html>
